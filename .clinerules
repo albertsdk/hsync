@@ -1,0 +1,4 @@
+# Every test must start from a clean environment and leave it clean,
+# even on error or interruption. No test may contaminate later tests
+# (no leftover files, no dirty environment variables, no orphaned
+# processes, no unrestored global state).
