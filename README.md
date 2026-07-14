@@ -30,7 +30,7 @@ ground up to work everywhere HTTP works — which is everywhere.
 
 | Tool | Protocol | HTTP | Real-Time | Architecture |
 |------|----------|:---:|:---:|------|
-| **HSYNC** | HTTP / HTTPS | ✅ | ✅ | Server + P2P |
+| **HSYNC** | HTTP / HTTPS | ✅ | ✅ | Client-Server + P2P |
 | rsync | SSH or rsync daemon | ❌ | ❌ | Client-Server |
 | Syncthing | BEP (custom) | ❌ | ✅ | P2P |
 | scp / sftp | SSH | ❌ | ❌ | Client-Server |
