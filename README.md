@@ -28,12 +28,14 @@ connections that are often blocked by corporate firewalls, cloud load
 balancers, or restrictive network policies. HSYNC was designed from the
 ground up to work everywhere HTTP works — which is everywhere.
 
-| Tool | Required Protocol | Works over HTTP only? |
-|------|-------------------|-----------------------|
-| **HSYNC** | HTTP / HTTPS | ✅ **Yes** |
-| rsync | SSH or rsync daemon | ❌ No |
-| Syncthing | BEP (custom protocol) | ❌ No |
-| FTP / FTPS | FTP | ❌ No |
+| Tool | Protocol | HTTP | Real-Time | Architecture |
+|------|----------|:---:|:---:|------|
+| **HSYNC** | HTTP / HTTPS | ✅ | ✅ | Server + P2P |
+| rsync | SSH or rsync daemon | ❌ | ❌ | Client-Server |
+| Syncthing | BEP (custom) | ❌ | ✅ | P2P |
+| scp / sftp | SSH | ❌ | ❌ | Client-Server |
+| Unison | SSH or direct socket | ❌ | ❌ | P2P |
+| Rclone | S3, SFTP, etc. | ⚠️ Partial | ❌ | Client-Server |
 
 **HSYNC fits naturally into:**
 - 🏢 **Corporate networks** — only ports 80/443 are open through the firewall
