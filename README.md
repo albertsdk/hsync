@@ -9,8 +9,7 @@ HTTP/HTTPS in real-time — no custom protocols, no SSH, no VPN required. Keep y
 files in sync across all your devices, even in the most restricted network 
 environments.
 
-> [!NOTE]
-> 👉 **Remember:** keep verified backups of your data before trying new
+> 👉 **Remember:** keep verified backups of your data before trying new 
 > synchronization tools. 😉
 
 ---
