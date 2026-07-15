@@ -4,12 +4,13 @@
 
 # HSYNC
 
-**HSYNC** is an open-source file synchronization system that works over standard
-HTTP/HTTPS in real-time — no custom protocols, no SSH, no VPN required. Keep your 
-files in sync across all your devices, even in the most restricted network 
-environments.
+**HSYNC** (HTTP Synchronization) is an open-source file synchronization system that
+works over standard HTTP/HTTPS in real-time — no custom protocols, no SSH, no VPN
+required. Works in both client-server and P2P modes.
+Keep your files in sync across all your devices, even in the most
+restricted network environments.
 
-> 👉 **Remember:** keep verified backups of your data before trying new 
+> 👉 **Remember:** keep verified backups of your data before trying new
 > synchronization tools. 😉
 
 ---
@@ -18,6 +19,24 @@ environments.
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-🐳-2496ED.svg)](https://www.docker.com/)
 [![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)]()
+
+## What is this repository?
+
+This is the **umbrella repository** for the HSYNC project family. It serves as the
+central landing page on GitHub and hosts the project logo, top-level documentation,
+and links to all sub-projects. To use HSYNC, clone one of the repositories listed
+in the [Project Family](#project-family) section below.
+
+## Demo
+
+> [!NOTE]
+> **Coming soon** — terminal recordings and screenshots of HSYNC in action.
+> In the meantime, check the individual project READMEs for usage examples.
+
+| Project | Demo / Screenshots |
+|---------|-------------------|
+| HSYNC Server | [Getting Started](https://github.com/albertobasso/hsync-server/blob/main/docs/getting-started.md) |
+| HSYNC Client | [CLI Reference](https://github.com/albertobasso/hsync-client/blob/main/docs/README.md) |
 
 ---
 
@@ -28,18 +47,21 @@ connections that are often blocked by corporate firewalls, cloud load
 balancers, or restrictive network policies. HSYNC was designed from the
 ground up to work everywhere HTTP works — which is everywhere.
 
-| Tool | Protocol | HTTP | Real-Time | Architecture |
-|------|----------|:---:|:---:|------|
-| **HSYNC** | HTTP / HTTPS | ✅ | ✅ | Client-Server + P2P |
-| rsync | SSH or rsync daemon | ❌ | ❌ | Client-Server |
-| Syncthing | BEP (custom) | ❌ | ✅ | P2P |
-| Nextcloud | HTTP / HTTPS (WebDAV) | ✅ | ⚠️\* | Client-Server |
-| Seafile | HTTP / HTTPS | ✅ | ⚠️\* | Client-Server |
-| scp / sftp | SSH | ❌ | ❌ | Client-Server |
-| Unison | SSH or direct socket | ❌ | ❌ | P2P |
-| Rclone | S3, SFTP, etc. | ⚠️ Partial | ❌ | Client-Server |
+| Tool | Protocol | HTTP | Real-Time | Original Files | Architecture |
+|------|----------|:---:|:---:|:---:|------|
+| **HSYNC** | HTTP / HTTPS | ✅ | ✅ | ✅ | Client-Server + P2P |
+| rsync | SSH or rsync daemon | ❌ | ❌ | ✅ | Client-Server |
+| Syncthing | BEP (custom) | ❌ | ✅ | ✅ | P2P |
+| Nextcloud | HTTP / HTTPS (WebDAV) | ✅ | ⚠️\* | ✅ | Client-Server |
+| Seafile | HTTP / HTTPS | ✅ | ⚠️\* | ❌ ¹ | Client-Server |
+| scp / sftp | SSH | ❌ | ❌ | ✅ | Client-Server |
+| Unison | SSH or direct socket | ❌ | ❌ | ✅ | P2P |
+| Rclone | S3, SFTP, etc. | ⚠️ Partial | ❌ | ⚠️ ² | Client-Server |
 
 > \* Local filesystem monitoring via desktop client; no native push notifications (WebSocket) like HSYNC.
+> 
+> ¹ Seafile uses a proprietary block-based internal storage format; files are not directly accessible from the filesystem without the Seafile server.  
+> ² Rclone with the `crypt` backend stores files in an opaque encrypted format; with other backends (e.g., SFTP, local) files remain in their original format.
 
 **HSYNC fits naturally into:**
 - 🏢 **Corporate networks** — only ports 80/443 are open through the firewall
@@ -79,24 +101,46 @@ flowchart LR
     CA["🖥️ Client A<br/><small>Office Desktop</small>"]
     CB["💻 Client B<br/><small>Laptop</small>"]
 
-    CA <-->|"HTTP/HTTPS<br/>direct peer-to-peer"| CB
+    CA <-->|"HTTPS<br/>direct peer-to-peer"| CB
 ```
 
 No server required — two clients on the same local network discover each
 other automatically and sync files directly over HTTP. Perfect for
 quick ad-hoc sync between two machines without infrastructure.
 
-## Project Structure
+## Project Family
 
 HSYNC is a family of projects, each with a specific role:
 
-| Repository | Role | Status |
-|------------|------|--------|
-| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
-| **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable |
-| **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
-| HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
-| HSYNC Android | Android client app | 🚧 In development |
+```mermaid
+flowchart TD
+    Main["📦 HSYNC Main<br/><small>this repo — umbrella & docs</small>"]
+
+    Common["📚 HSYNC Common<br/><small>shared library: models, protocol, hashing</small>"]
+    Server["🗄️ HSYNC Server<br/><small>REST API + WebSocket hub</small>"]
+    Client["💻 HSYNC Client<br/><small>CLI: server mode & LAN/P2P</small>"]
+    Desktop["🖥️ HSYNC Desktop<br/><small>GUI front-end</small>"]
+    Android["📱 HSYNC Android<br/><small>mobile client</small>"]
+
+    Main -.-> Common
+    Main -.-> Server
+    Main -.-> Client
+    Main -.-> Desktop
+    Main -.-> Android
+
+    Server --> Common
+    Client --> Common
+    Desktop --> Client
+    Android --> Client
+```
+
+| Repository | Role | Status | Depends on |
+|------------|------|--------|------------|
+| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
+| **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
+| **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable | — |
+| HSYNC Desktop | Desktop GUI front-end | 🚧 In development | [Client](https://github.com/albertobasso/hsync-client) |
+| HSYNC Android | Android client app | 🚧 In development | [Client](https://github.com/albertobasso/hsync-client) |
 
 All three stable projects are production-grade, tested, and documented.
 
@@ -119,7 +163,13 @@ All three stable projects are production-grade, tested, and documented.
 
 ## Quick Start
 
-Get a full HSYNC system running in under 5 minutes:
+Get a full HSYNC system running in under 5 minutes.
+
+### Prerequisites
+
+- **Python 3.12** or later
+- **Docker** and Docker Compose (for the server)
+- **Linux**, **macOS**, or **WD My Cloud** device
 
 ### 1. Start the Server
 
@@ -130,7 +180,12 @@ cd hsync-server
 ```
 
 The install script downloads a pinned release, generates secrets, and starts
-the server with Docker Compose.
+the server with Docker Compose. The server listens on port **9753** by default.
+
+> ℹ️ **One-liner with Docker:** if you already have the image, jump directly to:
+> ```bash
+> docker compose -f /path/to/hsync-server/compose.yaml up -d
+> ```
 
 ### 2. Connect a Client
 
@@ -166,6 +221,19 @@ Each project has its own comprehensive documentation:
 | HSYNC Client | [docs/README.md](https://github.com/albertobasso/hsync-client/blob/main/docs/README.md) — CLI reference, configuration, LAN/P2P guide |
 | HSYNC Common | [docs/README.md](https://github.com/albertobasso/hsync-common/blob/main/docs/README.md) — Models, protocol, utilities |
 
+## Security
+
+To report a vulnerability, please use the **Private Vulnerability Reporting**
+feature on GitHub:
+
+👉 **[Report a vulnerability](https://github.com/albertobasso/hsync/security/advisories/new)**
+
+For general security concerns, email `security [at] albertobasso [dot] dev`.
+Do not open public issues for security-sensitive matters.
+
+See our [Security Policy](SECURITY.md) for supported versions and hardening
+recommendations.
+
 ## Contributing
 
 HSYNC welcomes contributions! Each project has its own `CONTRIBUTING.md` with
@@ -180,6 +248,11 @@ setup instructions, coding standards, and the contribution workflow:
 All HSYNC projects are licensed under the [Mozilla Public License 2.0](LICENSE).
 
 ## Disclaimer
+
+<details>
+<summary>⚠️ <strong>Disclaimer — Read Before Use</strong></summary>
+
+<br>
 
 > [!WARNING]
 > **HSYNC manipulates files and directories** — it creates, overwrites, moves,
@@ -201,3 +274,5 @@ SOFTWARE.
 This disclaimer supplements, and does not replace, Sections 6 ("Disclaimer
 of Warranty") and 7 ("Limitation of Liability") of the
 [Mozilla Public License 2.0](LICENSE), which govern this software.
+
+</details>
