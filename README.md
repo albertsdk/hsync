@@ -131,7 +131,6 @@ flowchart TD
     Server --> Common
     Client --> Common
     Desktop --> Client
-    Android --> Client
 ```
 
 | Repository | Role | Status | Depends on |
@@ -140,7 +139,7 @@ flowchart TD
 | **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
 | **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable | — |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development | [Client](https://github.com/albertobasso/hsync-client) |
-| HSYNC Android | Android client app | 🚧 In development | [Client](https://github.com/albertobasso/hsync-client) |
+| HSYNC Android | Android client app | 🚧 In development | — |
 
 All three stable projects are production-grade, tested, and documented.
 
@@ -191,7 +190,6 @@ feature on GitHub:
 
 👉 **[Report a vulnerability](https://github.com/albertobasso/hsync/security/advisories/new)**
 
-For general security concerns, email `security [at] albertobasso [dot] dev`.
 Do not open public issues for security-sensitive matters.
 
 See our [Security Policy](SECURITY.md) for supported versions and hardening

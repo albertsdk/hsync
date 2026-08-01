@@ -15,8 +15,6 @@ Instead, use GitHub's private vulnerability reporting:
 1. Open the **Security** tab of the relevant repository.
 2. Click **Report a vulnerability** to start a private advisory.
 
-Alternatively, email `security [at] albertobasso [dot] dev`.
-
 Please include the affected project and version, steps to reproduce, the
 impact, and any suggested mitigation. Allow a reasonable time for a fix
 before any public disclosure. We aim to acknowledge reports within a few

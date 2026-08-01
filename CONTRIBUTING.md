@@ -25,12 +25,17 @@ Each repository contains its own `CONTRIBUTING.md` with:
 ## General guidelines
 
 - **Changes to shared models** (`hsync-common`) should be tested against
-  the projects that depend on them (`hsync-server`, `hsync-client`) before
-  opening a PR.
+  the projects that depend on them (`hsync-server`, `hsync-client`,
+  `hsync-desktop`, `hsync-android`) before opening a PR.
 - **API changes** must keep the OpenAPI reference (`docs/api.md`) and
   environment variable tables in sync.
 - **Cross-project decisions** are documented as Architecture Decision
   Records in the [hsync-common ADR directory](https://github.com/albertobasso/hsync-common/blob/main/docs/internal/adr/README.md).
+- **Documentation** — HSYNC maintains two documentation sets that must stay
+  in sync with the code: `llm-wiki/` (internal agent knowledge base) and
+  `docs/` (end-user technical documentation). Any change that affects
+  architecture, contracts, configuration, or behavior must update the
+  relevant files in both sets within the same change.
 
 ## Reporting issues
 
