@@ -114,7 +114,7 @@ HSYNC is a family of projects, each with a specific role:
 
 ```mermaid
 flowchart TD
-    Main["📦 HSYNC Main<br/><small>this repo — umbrella & docs</small>"]
+    Main["📦 HSYNC Main<br/><small>this repo — umbrella</small>"]
 
     Common["📚 HSYNC Common<br/><small>shared library: models, protocol, hashing</small>"]
     Server["🗄️ HSYNC Server<br/><small>REST API + WebSocket hub</small>"]
