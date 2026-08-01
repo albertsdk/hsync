@@ -161,55 +161,18 @@ All three stable projects are production-grade, tested, and documented.
 - 📊 **Prometheus metrics** — built-in observability
 - 🐳 **Docker-ready** — deploy with a single `compose.yaml`
 
-## Quick Start
+## Getting Started
 
-Get a full HSYNC system running in under 5 minutes.
+Each project ships its own step-by-step guide. Start from the repository you
+need:
 
-### Prerequisites
-
-- **Python 3.12** or later
-- **Docker** and Docker Compose (for the server)
-- **Linux**, **macOS**, or **WD My Cloud** device
-
-### 1. Start the Server
-
-```bash
-git clone https://github.com/albertobasso/hsync-server.git
-cd hsync-server
-./install.sh
-```
-
-The install script downloads a pinned release, generates secrets, and starts
-the server with Docker Compose. The server listens on port **9753** by default.
-
-> ℹ️ **One-liner with Docker:** if you already have the image, jump directly to:
-> ```bash
-> docker compose -f /path/to/hsync-server/compose.yaml up -d
-> ```
-
-### 2. Connect a Client
-
-```bash
-git clone https://github.com/albertobasso/hsync-client.git
-cd hsync-client
-pip install hsync-client
-
-# Server Mode — sync with the central server
-hsync sync --server https://your-server:9753 --api-key YOUR_API_KEY --bucket my-bucket
-
-# LAN Mode — direct peer-to-peer sync on the local network
-hsync sync --lan --bucket my-bucket
-```
-
-### 3. Add More Devices
-
-Repeat step 2 on any other machine. All devices connected to the same bucket
-will stay in sync automatically.
-
-For detailed instructions, see:
 - [HSYNC Server — Getting Started](https://github.com/albertobasso/hsync-server/blob/main/docs/getting-started.md)
-- [HSYNC Client — README](https://github.com/albertobasso/hsync-client/blob/main/README.md)
-- [HSYNC Server — Deployment Guide](https://github.com/albertobasso/hsync-server/blob/main/docs/deployment.md) (for production setups)
+  — install and run the server, generate secrets, export certificates;
+- [HSYNC Client — Getting Started](https://github.com/albertobasso/hsync-client/blob/main/docs/getting-started.md)
+  — connect to a server (Server Mode) or sync directly over the LAN
+  (LAN/P2P Mode);
+- [HSYNC Server — Deployment Guide](https://github.com/albertobasso/hsync-server/blob/main/docs/deployment.md)
+  — production setup, for networks exposed to the Internet.
 
 ## Documentation
 
