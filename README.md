@@ -4,14 +4,15 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) is an open-source file synchronization system that
-works over standard HTTP/HTTPS in real-time — no custom protocols, no SSH, no VPN
-required. Works in both client-server and P2P modes.
-Keep your files in sync across all your devices, even in the most
-restricted network environments.
-
-> 👉 **Remember:** keep verified backups of your data before trying new
-> synchronization tools. 😉
+**HSYNC** (HTTP Synchronization) keep your files in sync across all your devices 
+**in real-time** using **only the HTTP/HTTPS protocol**.
+This makes it the ideal choice in environments where HTTP is the only protocol
+allowed through firewalls, proxies, or network policies — a common constraint in
+corporate networks, cloud environments, and restricted infrastructures, no custom 
+protocols, no SSH, no VPN required. The tool stores your **files As-Is** in their 
+original format, directly browsable on disk — no proprietary containers, block 
+stores, or opaque internal formats.<br>
+Synchronization can occur via a central server or via P2P in a local network.
 
 ---
 
@@ -20,34 +21,34 @@ restricted network environments.
 [![Docker](https://img.shields.io/badge/Docker-🐳-2496ED.svg)](https://www.docker.com/)
 [![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)]()
 
-## What is this repository?
 
-This is the **umbrella repository** for the HSYNC project family. It serves as the
-central landing page on GitHub and hosts the project logo, top-level documentation,
-and links to all sub-projects. To use HSYNC, clone one of the repositories listed
-in the [Project Family](#project-family) section below.
+**HSYNC fits naturally into:**
+- 🏢 **Corporate networks** — only ports 80/443 are open through the firewall
+- ☁️ **Cloud environments** — services behind load balancers or reverse proxies
+- 🔒 **Restricted infrastructures** — SSH is disabled, VPNs unavailable
+- 🌐 **Web-friendly setups** — route traffic through CDNs, WAFs, or API gateways
+- ⚡ **Real-time reactivity** — WebSocket-powered instant notifications, no polling
 
-## Demo
+## Key Features
 
-> [!NOTE]
-> **Coming soon** — terminal recordings and screenshots of HSYNC in action.
-> In the meantime, check the individual project READMEs for usage examples.
+- 🚀 **HTTP/HTTPS only** — works through any proxy, firewall, or load balancer
+- 📁 **Bucket-based organization** — group files into isolated sync folders
+- 🔄 **Real-time sync** — WebSocket push notifications, no polling
+- ⚡ **LAN/P2P Mode** — direct device-to-device sync without a server
+- 🧩 **Delta transfer** — rsync-style block-level sync for large files
+- ⏩ **Resumable uploads** — pick up interrupted transfers where they left off
+- 🗜️ **Zstandard compression** — faster transfers over slow links
+- 🔐 **API Key authentication** — simple, secure Bearer token auth
+- ✅ **SHA-256 integrity** — every file is verified end-to-end
+- 🪦 **Deletion tombstones** — prevent deleted files from being resurrected
+- 🔗 **Symlink support** — preserve symbolic links across devices
+- 🛡️ **Rate limiting** — protect the server from abuse
+- 📊 **Prometheus metrics** — built-in observability
+- 🐳 **Docker-ready** — deploy with a single `compose.yaml`
 
-| Project | Demo / Screenshots |
-|---------|-------------------|
-| HSYNC Server | [Getting Started](https://github.com/albertobasso/hsync-server/blob/main/docs/getting-started.md) |
-| HSYNC Client | [CLI Reference](https://github.com/albertobasso/hsync-client/blob/main/docs/README.md) |
 
-## Why HSYNC?
 
-HSYNC is designed to synchronize files **in real-time** using **only the HTTP/HTTPS protocol**.
-This makes it the ideal choice in environments where HTTP is the only protocol
-allowed through firewalls, proxies, or network policies — a common constraint in
-corporate networks, cloud environments, and restricted infrastructures.<br><br>
 The table below compares HSYNC with common alternatives on five dimensions.<br>
-**Files As-Is** means the tool stores your files in their original format,
-directly browsable on disk — no proprietary containers, block stores, or
-opaque internal formats.
 
 | Tool | Protocol | HTTP | Real-Time | Files As-Is | Architecture |
 |------|----------|:---:|:---:|:---:|------|
@@ -64,13 +65,6 @@ opaque internal formats.
 > ² Seafile uses a proprietary block-based internal storage format; files are not directly accessible from the filesystem without the Seafile server.<br>
 > ³ Rclone with the `crypt` backend stores files in an opaque encrypted format; with other backends (e.g., SFTP, local) files remain in their original format.<br>
 > ⁴ Rclone's HTTP backend is read-only (download-only) and does not perform synchronization; Rclone's core operation relies on other protocols (S3, SFTP, etc.).
-
-**HSYNC fits naturally into:**
-- 🏢 **Corporate networks** — only ports 80/443 are open through the firewall
-- ☁️ **Cloud environments** — services behind load balancers or reverse proxies
-- 🔒 **Restricted infrastructures** — SSH is disabled, VPNs unavailable
-- 🌐 **Web-friendly setups** — route traffic through CDNs, WAFs, or API gateways
-- ⚡ **Real-time reactivity** — WebSocket-powered instant notifications, no polling
 
 ## How It Works
 
@@ -137,41 +131,23 @@ flowchart TD
 
 | Repository | Role | Status | Depends on |
 |------------|------|--------|------------|
-| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
 | **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
+| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
 | **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable | — |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development | [Client](https://github.com/albertobasso/hsync-client) |
 | HSYNC Android | Android client app | 🚧 In development | — |
 
 All three stable projects are production-grade, tested, and documented.
 
-## Key Features
-
-- 🚀 **HTTP/HTTPS only** — works through any proxy, firewall, or load balancer
-- 📁 **Bucket-based organization** — group files into isolated sync folders
-- 🔄 **Real-time sync** — WebSocket push notifications, no polling
-- ⚡ **LAN/P2P Mode** — direct device-to-device sync without a server
-- 🧩 **Delta transfer** — rsync-style block-level sync for large files
-- ⏩ **Resumable uploads** — pick up interrupted transfers where they left off
-- 🗜️ **Zstandard compression** — faster transfers over slow links
-- 🔐 **API Key authentication** — simple, secure Bearer token auth
-- ✅ **SHA-256 integrity** — every file is verified end-to-end
-- 🪦 **Deletion tombstones** — prevent deleted files from being resurrected
-- 🔗 **Symlink support** — preserve symbolic links across devices
-- 🛡️ **Rate limiting** — protect the server from abuse
-- 📊 **Prometheus metrics** — built-in observability
-- 🐳 **Docker-ready** — deploy with a single `compose.yaml`
-
 ## Getting Started
 
 Each project ships its own step-by-step guide. Start from the repository you
 need:
 
+- [HSYNC Client — Getting Started](https://github.com/albertobasso/hsync-client/blob/main/docs/getting-started.md)
+  — connect to a server (Server Mode) or sync directly over the LAN (LAN/P2P Mode);
 - [HSYNC Server — Getting Started](https://github.com/albertobasso/hsync-server/blob/main/docs/getting-started.md)
   — install and run the server, generate secrets, export certificates;
-- [HSYNC Client — Getting Started](https://github.com/albertobasso/hsync-client/blob/main/docs/getting-started.md)
-  — connect to a server (Server Mode) or sync directly over the LAN
-  (LAN/P2P Mode);
 - [HSYNC Server — Deployment Guide](https://github.com/albertobasso/hsync-server/blob/main/docs/deployment.md)
   — production setup, for networks exposed to the Internet.
 
@@ -202,8 +178,8 @@ recommendations.
 HSYNC welcomes contributions! Each project has its own `CONTRIBUTING.md` with
 setup instructions, coding standards, and the contribution workflow:
 
-- [HSYNC Server — Contributing](https://github.com/albertobasso/hsync-server/blob/main/CONTRIBUTING.md)
 - [HSYNC Client — Contributing](https://github.com/albertobasso/hsync-client/blob/main/CONTRIBUTING.md)
+- [HSYNC Server — Contributing](https://github.com/albertobasso/hsync-server/blob/main/CONTRIBUTING.md)
 - [HSYNC Common — Contributing](https://github.com/albertobasso/hsync-common/blob/main/CONTRIBUTING.md)
 
 ## License
