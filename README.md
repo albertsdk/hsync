@@ -38,16 +38,18 @@ in the [Project Family](#project-family) section below.
 | HSYNC Server | [Getting Started](https://github.com/albertobasso/hsync-server/blob/main/docs/getting-started.md) |
 | HSYNC Client | [CLI Reference](https://github.com/albertobasso/hsync-client/blob/main/docs/README.md) |
 
----
-
 ## Why HSYNC?
 
-Most file sync tools rely on SSH, custom protocols, or peer-to-peer
-connections that are often blocked by corporate firewalls, cloud load
-balancers, or restrictive network policies. HSYNC was designed from the
-ground up to work everywhere HTTP works — which is everywhere.
+HSYNC is designed to synchronize files **in real-time** using **only the HTTP/HTTPS protocol**.
+This makes it the ideal choice in environments where HTTP is the only protocol
+allowed through firewalls, proxies, or network policies — a common constraint in
+corporate networks, cloud environments, and restricted infrastructures.<br><br>
+The table below compares HSYNC with common alternatives on five dimensions.<br>
+**Files As-Is** means the tool stores your files in their original format,
+directly browsable on disk — no proprietary containers, block stores, or
+opaque internal formats.
 
-| Tool | Protocol | HTTP | Real-Time | Original Files | Architecture |
+| Tool | Protocol | HTTP | Real-Time | Files As-Is | Architecture |
 |------|----------|:---:|:---:|:---:|------|
 | **HSYNC** | HTTP / HTTPS | ✅ | ✅ | ✅ | Client-Server + P2P |
 | rsync | SSH or rsync daemon | ❌ | ❌ | ✅ | Client-Server |
