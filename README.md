@@ -47,7 +47,6 @@ Synchronization can occur via a central server or via P2P in a local network.
 - 🐳 **Docker-ready** — deploy with a single `compose.yaml`
 
 
-
 The table below compares HSYNC with common alternatives on five dimensions.<br>
 
 | Tool | Protocol | HTTP | Real-Time | Files As-Is | Architecture |
@@ -129,13 +128,13 @@ flowchart TD
     Desktop --> Client
 ```
 
-| Repository | Role | Status | Depends on |
-|------------|------|--------|------------|
-| **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
-| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable | [Common](https://github.com/albertobasso/hsync-common) |
-| **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable | — |
-| HSYNC Desktop | Desktop GUI front-end | 🚧 In development | [Client](https://github.com/albertobasso/hsync-client) |
-| HSYNC Android | Android client app | 🚧 In development | — |
+| Repository | Role | Status |
+|------------|------|--------|
+| **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable |
+| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
+| **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
+| HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
+| HSYNC Android | Android client app | 🚧 In development |
 
 All three stable projects are production-grade, tested, and documented.
 
@@ -150,16 +149,6 @@ need:
   — install and run the server, generate secrets, export certificates;
 - [HSYNC Server — Deployment Guide](https://github.com/albertobasso/hsync-server/blob/main/docs/deployment.md)
   — production setup, for networks exposed to the Internet.
-
-## Documentation
-
-Each project has its own comprehensive documentation:
-
-| Project | Documentation |
-|---------|---------------|
-| HSYNC Server | [docs/README.md](https://github.com/albertobasso/hsync-server/blob/main/docs/README.md) — API reference, deployment, operations, security |
-| HSYNC Client | [docs/README.md](https://github.com/albertobasso/hsync-client/blob/main/docs/README.md) — CLI reference, configuration, LAN/P2P guide |
-| HSYNC Common | [docs/README.md](https://github.com/albertobasso/hsync-common/blob/main/docs/README.md) — Models, protocol, utilities |
 
 ## Security
 
