@@ -14,8 +14,6 @@ original format, directly browsable on disk — no proprietary containers, block
 stores, or opaque internal formats.<br>
 Synchronization can occur via a central server or via P2P in a local network.
 
----
-
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-🐳-2496ED.svg)](https://www.docker.com/)
@@ -46,6 +44,7 @@ Synchronization can occur via a central server or via P2P in a local network.
 - 📊 **Prometheus metrics** — built-in observability
 - 🐳 **Docker-ready** — deploy with a single `compose.yaml`
 
+<br>
 
 The table below compares HSYNC with common alternatives on five dimensions.<br>
 
