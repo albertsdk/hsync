@@ -25,13 +25,14 @@ Synchronization can occur via a central server or via P2P in a local network.
 - ☁️ **Cloud environments** — services behind load balancers or reverse proxies
 - 🔒 **Restricted infrastructures** — SSH is disabled, VPNs unavailable
 - 🌐 **Web-friendly setups** — route traffic through CDNs, WAFs, or API gateways
-- ⚡ **Real-time reactivity** — WebSocket-powered instant notifications, no polling
+- ⚡ **Real-time reactivity** — WebSocket-powered instant notifications, no polling; after a save, sync starts in a fraction of a second, not after a 5–10s quiet window
 
 ## Key Features
 
 - 🚀 **HTTP/HTTPS only** — works through any proxy, firewall, or load balancer
 - 📁 **Bucket-based organization** — group files into isolated sync folders
 - 🔄 **Real-time sync** — WebSocket push notifications, no polling
+- ⚡ **Fast after save** — once the editor closes the file, transfer starts in a fraction of a second (no fixed 5–10s quiet window); already-idle files skip the wait
 - ⚡ **LAN/P2P Mode** — direct device-to-device sync without a server
 - 🧩 **Delta transfer** — rsync-style block-level sync for large files
 - ⏩ **Resumable uploads** — pick up interrupted transfers where they left off
