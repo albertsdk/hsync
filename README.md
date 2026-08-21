@@ -25,7 +25,7 @@ Synchronization can occur via a central server or via P2P in a local network.
 - ☁️ **Cloud environments** — services behind load balancers or reverse proxies
 - 🔒 **Restricted infrastructures** — SSH is disabled, VPNs unavailable
 - 🌐 **Web-friendly setups** — route traffic through CDNs, WAFs, or API gateways
-- ⚡ **Real-time reactivity** — WebSocket-powered instant notifications, no polling; after a save, sync starts in a fraction of a second, not after a 5–10s quiet window
+- ⚡ **Real-time reactivity** — WebSocket-powered instant notifications, no polling
 
 ## Key Features
 
