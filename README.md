@@ -18,7 +18,7 @@ Synchronization is supported both via a centralized hub (Client-Server) and dece
 [![Kotlin 2.4](https://img.shields.io/badge/Kotlin-2.4-7F52FF.svg)](https://kotlinlang.org/)
 [![Android SDK 33+](https://img.shields.io/badge/Android-33+-3DDC84.svg)](https://developer.android.com/)
 [![Qt 6](https://img.shields.io/badge/Qt-6-41CD52.svg)](https://www.qt.io/)
-[![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)](https://github.com/albertobasso/hsync-client/blob/main/docs/installation.md)
+[![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)](https://github.com/albertosdk/hsync-client/blob/main/docs/installation.md)
 
 ---
 
@@ -161,9 +161,9 @@ flowchart TD
 
 | Component | Function | Lifecycle Status |
 | --- | --- | --- |
-| **[HSYNC Client](https://github.com/albertobasso/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable |
-| **[HSYNC Server](https://github.com/albertobasso/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
-| **[HSYNC Common](https://github.com/albertobasso/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
+| **[HSYNC Client](https://github.com/albertosdk/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable |
+| **[HSYNC Server](https://github.com/albertosdk/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
+| **[HSYNC Common](https://github.com/albertosdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
 | HSYNC Android | Android client app | 🚧 In development |
 
@@ -175,9 +175,9 @@ flowchart TD
 
 Comprehensive deployment guidelines and technical documentation are maintained within their respective component repositories:
 
-* **[HSYNC Client — Implementation Guide](https://github.com/albertobasso/hsync-client/blob/main/docs/getting-started.md)**: Configuration for endpoint nodes connecting to a central server or engaging in P2P topologies.
-* **[HSYNC Server — Initialization](https://github.com/albertobasso/hsync-server/blob/main/docs/getting-started.md)**: Guidelines for local deployment, secret generation, and certificate management.
-* **[HSYNC Server — Production Deployment](https://github.com/albertobasso/hsync-server/blob/main/docs/deployment.md)**: Best practices for exposing the infrastructure to public networks securely.
+* **[HSYNC Client — Implementation Guide](https://github.com/albertosdk/hsync-client/blob/main/docs/getting-started.md)**: Configuration for endpoint nodes connecting to a central server or engaging in P2P topologies.
+* **[HSYNC Server — Initialization](https://github.com/albertosdk/hsync-server/blob/main/docs/getting-started.md)**: Guidelines for local deployment, secret generation, and certificate management.
+* **[HSYNC Server — Production Deployment](https://github.com/albertosdk/hsync-server/blob/main/docs/deployment.md)**: Best practices for exposing the infrastructure to public networks securely.
 
 ---
 
@@ -186,7 +186,7 @@ Comprehensive deployment guidelines and technical documentation are maintained w
 Security is a primary design pillar of HSYNC.
 To report potential security vulnerabilities, please avoid public issue trackers and utilize the private reporting channel:
 
-**[Report a Security Vulnerability](https://github.com/albertobasso/hsync/security/advisories/new)**
+**[Report a Security Vulnerability](https://github.com/albertosdk/hsync/security/advisories/new)**
 
 Review our [Security Policy](SECURITY.md) for detailed information on supported versions, patch management, and infrastructure hardening guidelines.
 
@@ -196,9 +196,9 @@ Review our [Security Policy](SECURITY.md) for detailed information on supported 
 
 Engineering contributions are evaluated and integrated through a standard Pull Request workflow. Review the specific `CONTRIBUTING.md` in each repository for architecture standards and environment setup:
 
-* [HSYNC Client Contribution Guidelines](https://github.com/albertobasso/hsync-client/blob/main/CONTRIBUTING.md)
-* [HSYNC Server Contribution Guidelines](https://github.com/albertobasso/hsync-server/blob/main/CONTRIBUTING.md)
-* [HSYNC Common Contribution Guidelines](https://github.com/albertobasso/hsync-common/blob/main/CONTRIBUTING.md)
+* [HSYNC Client Contribution Guidelines](https://github.com/albertosdk/hsync-client/blob/main/CONTRIBUTING.md)
+* [HSYNC Server Contribution Guidelines](https://github.com/albertosdk/hsync-server/blob/main/CONTRIBUTING.md)
+* [HSYNC Common Contribution Guidelines](https://github.com/albertosdk/hsync-common/blob/main/CONTRIBUTING.md)
 * [HSYNC Main Contribution Guidelines](CONTRIBUTING.md)
 
 ## Licensing

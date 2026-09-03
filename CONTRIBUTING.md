@@ -7,11 +7,11 @@ each with its own repository, setup instructions, and contribution workflow.
 
 | Project | Repository | What it does |
 |---------|-----------|--------------|
-| **HSYNC Common** | [hsync-common](https://github.com/albertobasso/hsync-common) | Shared library: models, protocol, hashing, compression |
-| **HSYNC Server** | [hsync-server](https://github.com/albertobasso/hsync-server) | REST API + WebSocket hub |
-| **HSYNC Client** | [hsync-client](https://github.com/albertobasso/hsync-client) | CLI client (Server Mode + LAN/P2P) |
-| **HSYNC Desktop** | [hsync-desktop](https://github.com/albertobasso/hsync-desktop) | Desktop GUI (Qt 6) |
-| **HSYNC Android** | [hsync-android](https://github.com/albertobasso/hsync-android) | Android client app |
+| **HSYNC Common** | [hsync-common](https://github.com/albertosdk/hsync-common) | Shared library: models, protocol, hashing, compression |
+| **HSYNC Server** | [hsync-server](https://github.com/albertosdk/hsync-server) | REST API + WebSocket hub |
+| **HSYNC Client** | [hsync-client](https://github.com/albertosdk/hsync-client) | CLI client (Server Mode + LAN/P2P) |
+| **HSYNC Desktop** | [hsync-desktop](https://github.com/albertosdk/hsync-desktop) | Desktop GUI (Qt 6) |
+| **HSYNC Android** | [hsync-android](https://github.com/albertosdk/hsync-android) | Android client app |
 
 Each repository contains its own `CONTRIBUTING.md` with:
 
@@ -30,7 +30,7 @@ Each repository contains its own `CONTRIBUTING.md` with:
 - **API changes** must keep the OpenAPI reference (`docs/api.md`) and
   environment variable tables in sync.
 - **Cross-project decisions** are documented as Architecture Decision
-  Records in the [hsync-common ADR directory](https://github.com/albertobasso/hsync-common/blob/main/docs/internal/adr/README.md).
+  Records in the [hsync-common ADR directory](https://github.com/albertosdk/hsync-common/blob/main/docs/internal/adr/README.md).
 - **Documentation** — HSYNC maintains two documentation sets that must stay
   in sync with the code: `llm-wiki/` (internal agent knowledge base) and
   `docs/` (end-user technical documentation). Any change that affects
