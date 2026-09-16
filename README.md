@@ -57,6 +57,8 @@ HSYNC is engineered to operate seamlessly within:
 * **Deterministic Deletion Handling (Tombstones):** Employs strict tombstone tracking to prevent the accidental resurrection of deleted files across distributed nodes.
 * **Native Symlink Support:** Accurately preserves symbolic links across platforms, a critical requirement for development environments and system administration.
 * **Real-Time Architecture:** Event-driven architecture powered by WebSockets, eliminating the high overhead and inefficiency of traditional HTTP polling.
+* **Private P2P Networks:** LAN/P2P clusters can be isolated from one another with a group filter and authenticated with a shared group key, so independent teams can share one physical network without ever mixing data.
+* **Self-Hosted, No Vendor Lock-In:** every topology runs on infrastructure you own — the hub is your own server and buckets are plain directories on your filesystem, with no third-party service in the data path.
 
 **🛡️ Resilience & Data Integrity**
 
@@ -146,12 +148,14 @@ flowchart TD
     Client["💻 HSYNC Client<br/><small>CLI: Node Controller</small>"]
     Desktop["🖥️ HSYNC Desktop<br/><small>GUI Interface</small>"]
     Android["📱 HSYNC Android<br/><small>Mobile Application</small>"]
+    Bootnode["📡 HSYNC Bootnode<br/><small>P2P Internet Discovery</small>"]
 
     Main -.-> Common
     Main -.-> Server
     Main -.-> Client
     Main -.-> Desktop
     Main -.-> Android
+    Main -.-> Bootnode
 
     Server --> Common
     Client --> Common
@@ -166,6 +170,7 @@ flowchart TD
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
 | HSYNC Android | Android client app | 🚧 In development |
+| **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | 🚧 In development |
 
 *Note: All Stable components are fully tested, documented, and suitable for enterprise deployment.*
 
