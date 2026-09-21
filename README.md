@@ -8,7 +8,7 @@
 
 This architectural design makes HSYNC the optimal solution for environments subject to strict network policies, such as corporate infrastructures, cloud deployments, and zero-trust networks where custom protocols, SSH, or VPNs are restricted. Data is stored natively on the filesystem in its original format—ensuring immediate accessibility and avoiding vendor lock-in through proprietary containers or opaque block stores.
 
-Synchronization is supported both via a centralized hub (Client-Server) and decentralized topologies (LAN/P2P).
+Synchronization is supported both via a centralized hub (Client-Server) and decentralized topologies (P2P — on the local network, or across networks through an optional bootnode).
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -49,7 +49,7 @@ HSYNC is engineered to operate seamlessly within:
 
 * **Zero-Delay Sync (Fast after save):** Data transfer triggers in a fraction of a second upon file closure, eliminating traditional quiet-window latencies and ensuring continuous pipeline synchronization.
 * **Block-Level Delta Transfer:** For large files, the system transmits exclusively the modified data blocks (rsync-style). This drastically reduces bandwidth consumption and transfer times.
-* **Direct LAN/P2P Mode:** Enables direct device-to-device synchronization without centralized server dependency, minimizing infrastructure load and maximizing local network throughput.
+* **Direct P2P Mode:** Enables direct device-to-device synchronization without centralized server dependency, minimizing infrastructure load and maximizing local network throughput.
 
 **🛰️ Network & Architecture**
 
@@ -57,7 +57,7 @@ HSYNC is engineered to operate seamlessly within:
 * **Deterministic Deletion Handling (Tombstones):** Employs strict tombstone tracking to prevent the accidental resurrection of deleted files across distributed nodes.
 * **Native Symlink Support:** Accurately preserves symbolic links across platforms, a critical requirement for development environments and system administration.
 * **Real-Time Architecture:** Event-driven architecture powered by WebSockets, eliminating the high overhead and inefficiency of traditional HTTP polling.
-* **Private P2P Networks:** LAN/P2P clusters can be isolated from one another with a group filter and authenticated with a shared group key, so independent teams can share one physical network without ever mixing data.
+* **Private P2P Networks:** P2P clusters can be isolated from one another with a group filter and authenticated with a shared group key, so independent teams can share one physical network without ever mixing data.
 * **Self-Hosted, No Vendor Lock-In:** every topology runs on infrastructure you own — the hub is your own server and buckets are plain directories on your filesystem, with no third-party service in the data path.
 
 **🛡️ Resilience & Data Integrity**
@@ -120,18 +120,21 @@ flowchart LR
 
 A central **HSYNC Server** hosts shared environments (buckets). Connected endpoints push changes via standard REST API calls and maintain a persistent WebSocket connection for event listening. Modifications on any endpoint trigger sub-second broadcast notifications, prompting immediate alignment across all nodes.
 
-### LAN / P2P Mode (Decentralized)
+### P2P Mode (Decentralized)
 
 ```mermaid
 flowchart LR
     CA["🖥️ Client A<br/><small>Workstation</small>"]
     CB["💻 Client B<br/><small>Remote Device</small>"]
+    BN["📡 Bootnode<br/><small>Optional discovery</small>"]
 
     CA <-->|"HTTPS<br/>Direct Peer-to-Peer"| CB
+    CA -.->|"boot/1 (QUIC)"| BN
+    CB -.->|"boot/1 (QUIC)"| BN
 
 ```
 
-Designed for serverless environments. Endpoints on the same local network autonomously discover one another and perform direct synchronization over HTTP. Ideal for high-speed, localized data transfer without central infrastructure dependencies.
+Designed for serverless environments. Endpoints on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP; groups spread across networks discover each other through an optional self-hosted [HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode) (`boot/1` over QUIC). Ideal for high-speed, localized data transfer without central infrastructure dependencies.
 
 ---
 
@@ -165,7 +168,7 @@ flowchart TD
 
 | Component | Function | Lifecycle Status |
 | --- | --- | --- |
-| **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | CLI client: Server Mode and LAN/P2P Mode | ✅ Stable |
+| **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | CLI client: Server Mode and P2P Mode | ✅ Stable |
 | **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
@@ -181,6 +184,8 @@ flowchart TD
 Comprehensive deployment guidelines and technical documentation are maintained within their respective component repositories:
 
 * **[HSYNC Client — Implementation Guide](https://github.com/albertsdk/hsync-client/blob/main/docs/getting-started.md)**: Configuration for endpoint nodes connecting to a central server or engaging in P2P topologies.
+* **[HSYNC Client — P2P across networks](https://github.com/albertsdk/hsync-client/blob/main/docs/p2p-bootnode.md)**: Running a P2P group across different networks through a `boot/1` bootnode.
+* **[HSYNC Bootnode — Deployment](https://github.com/albertsdk/hsync-bootnode/blob/main/docs/README.md)**: Installing and running the optional self-hosted Internet discovery node for P2P topologies.
 * **[HSYNC Server — Initialization](https://github.com/albertsdk/hsync-server/blob/main/docs/getting-started.md)**: Guidelines for local deployment, secret generation, and certificate management.
 * **[HSYNC Server — Production Deployment](https://github.com/albertsdk/hsync-server/blob/main/docs/deployment.md)**: Best practices for exposing the infrastructure to public networks securely.
 

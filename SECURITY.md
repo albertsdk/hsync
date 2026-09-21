@@ -29,7 +29,7 @@ and multiple clients. Key security controls across the ecosystem:
   compared in constant time. WebSocket clients authenticate with an
   `auth` frame before any event is processed.
 - **Transport security** — TLS (HTTPS/WSS) is available on all components.
-  LAN/P2P mode uses persistent self-signed identities with connection-level
+  P2P mode uses persistent self-signed identities with connection-level
   fingerprint pinning (TOFU).
 - **Rate limiting** — per-IP limits on uploads, downloads, WebSocket
   connections, and general endpoints, plus per-connection WebSocket message
