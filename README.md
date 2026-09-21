@@ -4,11 +4,11 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) provides **real-time**, **enterprise-grade** file synchronization across distributed environments using exclusively the standard **HTTP/HTTPS protocol**.
+**HSYNC** (HTTP Synchronization) provides **real-time**, **enterprise-grade** file synchronization across distributed environments, built on the standard **HTTP/HTTPS protocol**: the data plane — synchronization, transfers and events — rides REST and WebSocket calls that pass through existing firewalls, proxies and deep packet inspection systems.
 
 This architectural design makes HSYNC the optimal solution for environments subject to strict network policies, such as corporate infrastructures, cloud deployments, and zero-trust networks where custom protocols, SSH, or VPNs are restricted. Data is stored natively on the filesystem in its original format, ensuring immediate accessibility and avoiding vendor lock-in through proprietary containers or opaque block stores.
 
-Synchronization is supported both via a centralized hub (Client-Server with [HSYNC Server](https://github.com/albertsdk/hsync-server))) and decentralized topologies (P2P — on the local network, or across networks through an optional bootstrap node ([HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)).
+Synchronization is supported both via a centralized hub (Client-Server with [HSYNC Server](https://github.com/albertsdk/hsync-server)) and decentralized topologies (P2P — on the local network, or across networks through an optional bootstrap node ([HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode))). Both topologies keep the same HTTP-based data plane; only **peer discovery** across networks uses QUIC (`boot/1`), and only when the devices are not on the same LAN.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -18,6 +18,7 @@ Synchronization is supported both via a centralized hub (Client-Server with [HSY
 [![Kotlin 2.4](https://img.shields.io/badge/Kotlin-2.4-7F52FF.svg)](https://kotlinlang.org/)
 [![Android SDK 33+](https://img.shields.io/badge/Android-33+-3DDC84.svg)](https://developer.android.com/)
 [![Qt 6](https://img.shields.io/badge/Qt-6-41CD52.svg)](https://www.qt.io/)
+[![Rust 1.98+](https://img.shields.io/badge/Rust-1.98+-DEA584.svg)](https://www.rust-lang.org/)
 [![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md)
 
 ---
@@ -29,52 +30,47 @@ Synchronization is supported both via a centralized hub (Client-Server with [HSY
 * **[Market Comparison](#market-comparison)**
 * **[Architecture Overview](#architecture-overview)**
 * **[Project Ecosystem](#project-ecosystem)**
-* **[Deployment & Documentation](#deployment--documentation)**
 * **[Security & Vulnerability Management](#security--vulnerability-management)**
 
 ## Architectural Applicability
 
 HSYNC is engineered to operate seamlessly within:
 
-* **Corporate Networks:** Operates natively through standard ports (80/443), passing through existing firewalls, proxies, and deep packet inspection systems.
+* **Corporate Networks:** Operates over standard HTTP ports — the server listens on **9753** by default and is exposed on 443 by a reverse proxy (or directly with `--port 443`) — so it passes through existing firewalls, proxies, and deep packet inspection systems.
 * **Cloud Infrastructures:** Fully compatible with standard IT infrastructure, including load balancers, Web Application Firewalls (WAFs), and reverse proxies.
 * **Restricted Environments:** Functions autonomously in secure environments where standard administrative protocols (like SSH) or VPN access are prohibited.
 * **Real-Time Workflows:** Replaces legacy polling mechanisms with event-driven, WebSocket-based push notifications for immediate data consistency.
 
----
-
 ## Technical Capabilities & Core Differentiators
 
-**⚙️ Core Performance Differentiators**
+### ⚙️ Core Performance Differentiators
 
-* **Zero-Delay Sync (Fast after save):** Data transfer triggers in a fraction of a second upon file closure, eliminating traditional quiet-window latencies and ensuring continuous pipeline synchronization.
+* **Zero-Delay Sync (Fast after save):** Data transfer triggers immediately upon file closure, eliminating traditional quiet-window latencies and ensuring continuous pipeline synchronization.
 * **Block-Level Delta Transfer:** For large files, the system transmits exclusively the modified data blocks (rsync-style). This drastically reduces bandwidth consumption and transfer times.
 * **Direct P2P Mode:** Enables direct device-to-device synchronization without centralized server dependency, minimizing infrastructure load and maximizing local network throughput.
 
-**🛰️ Network & Architecture**
+### 🛰️ Network & Architecture
 
-* **Universal HTTP/HTTPS Compatibility:** Guaranteed operation across any enterprise network setup without requiring custom routing or specific port forwarding.
+* **Universal HTTP/HTTPS Compatibility:** Operates over standard HTTP/HTTPS ports, so it traverses common enterprise network setups without custom routing or additional port forwarding.
 * **Deterministic Deletion Handling (Tombstones):** Employs strict tombstone tracking to prevent the accidental resurrection of deleted files across distributed nodes.
 * **Native Symlink Support:** Accurately preserves symbolic links across platforms, a critical requirement for development environments and system administration.
 * **Real-Time Architecture:** Event-driven architecture powered by WebSockets, eliminating the high overhead and inefficiency of traditional HTTP polling.
 * **Private P2P Networks:** P2P clusters can be isolated from one another with a group filter and authenticated with a shared group key, so independent teams can share one physical network without ever mixing data.
 * **Self-Hosted, No Vendor Lock-In:** every topology runs on infrastructure you own — the hub is your own server and buckets are plain directories on your filesystem, with no third-party service in the data path.
 
-**🛡️ Resilience & Data Integrity**
+### 🛡️ Resilience & Data Integrity
 
 * **Fault-Tolerant Transfers (Resumable uploads):** Automatically resumes interrupted transfers from the exact point of failure, ensuring reliable delivery of massive payloads over unstable connections.
 * **Zstandard (Zstd) Compression:** Utilizes modern compression algorithms to optimize throughput, particularly effective on low-bandwidth links.
-* **SHA-256 Integrity Verification:** Enforces end-to-end cryptographic hashing for every file, guaranteeing absolute data integrity against transmission corruption.
+* **SHA-256 Integrity Verification:** Hashes every file end-to-end, so transmission corruption is detected before a file is committed.
 
-**🔐 Security, Governance & Deployment**
+### 🔐 Security, Governance & Deployment
 
 * **Isolated Data Architecture (Bucket-based):** Organizes logical groups of files into isolated sync buckets, facilitating multi-tenant architectures and strict access control.
 * **Standardized Authentication:** Secures endpoints via API Key (Bearer token) authentication, easily integrable with enterprise secret management systems.
 * **Built-in Observability (Prometheus):** Exposes native metrics for direct integration into corporate monitoring and alerting stacks.
 * **Containerized Deployment (Docker):** Ensures rapid, reproducible deployments via single `compose.yaml` files, ideal for cloud-native and on-premise scaling.
 * **Infrastructure Protection (Rate Limiting):** Incorporates defense mechanisms against traffic spikes and abuse, ensuring high availability and service uptime.
-
----
 
 ## Market Comparison
 
@@ -96,8 +92,6 @@ The following table benchmarks HSYNC against industry standards across critical 
 > **³** When utilizing the `crypt` backend, files are stored in an opaque encrypted format.<br>
 > **⁴** Rclone's HTTP backend is restricted to read-only operations. Core synchronization requires non-HTTP protocols.
 
----
-
 ## Architecture Overview
 
 HSYNC operates seamlessly in two primary network topologies:
@@ -118,7 +112,7 @@ flowchart LR
 
 ```
 
-A central **HSYNC Server** hosts shared environments (buckets). Connected endpoints push changes via standard REST API calls and maintain a persistent WebSocket connection for event listening. Modifications on any endpoint trigger sub-second broadcast notifications, prompting immediate alignment across all nodes.
+A central [HSYNC Server](https://github.com/albertsdk/hsync-server) hosts shared environments (buckets). Connected endpoints push changes via standard REST API calls and maintain a persistent WebSocket connection for event listening. Modifications on any endpoint trigger sub-second broadcast notifications, prompting immediate alignment across all nodes.
 
 ### P2P Mode (Decentralized)
 
@@ -134,9 +128,7 @@ flowchart LR
 
 ```
 
-Designed for serverless environments. Endpoints on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP; groups spread across networks discover each other through an optional self-hosted [HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode) (`boot/1` over QUIC). Ideal for high-speed, localized data transfer without central infrastructure dependencies.
-
----
+Designed for serverless environments. Endpoints on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP; groups spread across networks discover each other through an optional self-hosted [HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode) (`boot/1` over QUIC/UDP 443). Only discovery leaves HTTP: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS. Ideal for high-speed, localized data transfer without central infrastructure dependencies.
 
 ## Project Ecosystem
 
@@ -175,48 +167,16 @@ flowchart TD
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
 | HSYNC Android | Android client app | 🚧 In development |
 
-*Note: All Stable components are fully tested, documented, and suitable for enterprise deployment.*
-
----
-
-## Deployment & Documentation
-
-Comprehensive deployment guidelines and technical documentation are maintained within their respective component repositories:
-
-* **[HSYNC Client — Implementation Guide](https://github.com/albertsdk/hsync-client/blob/main/docs/getting-started.md)**: Configuration for endpoint nodes connecting to a central server or engaging in P2P topologies.
-* **[HSYNC Client — P2P across networks](https://github.com/albertsdk/hsync-client/blob/main/docs/p2p-bootnode.md)**: Running a P2P group across different networks through a `boot/1` bootnode.
-* **[HSYNC Bootnode — Deployment](https://github.com/albertsdk/hsync-bootnode/blob/main/docs/README.md)**: Installing and running the optional self-hosted Internet discovery node for P2P topologies.
-* **[HSYNC Server — Initialization](https://github.com/albertsdk/hsync-server/blob/main/docs/getting-started.md)**: Guidelines for local deployment, secret generation, and certificate management.
-* **[HSYNC Server — Production Deployment](https://github.com/albertsdk/hsync-server/blob/main/docs/deployment.md)**: Best practices for exposing the infrastructure to public networks securely.
-
----
+*Note: All Stable components ship a full test suite and documentation, and are suitable for enterprise deployment.*
 
 ## Security & Vulnerability Management
 
-Security is a primary design pillar of HSYNC.
-To report potential security vulnerabilities, please avoid public issue trackers and utilize the private reporting channel:
-
-**[Report a Security Vulnerability](https://github.com/albertsdk/hsync/security/advisories/new)**
-
-Review our [Security Policy](SECURITY.md) for detailed information on supported versions, patch management, and infrastructure hardening guidelines.
-
----
-
-## Open Source Contributions
-
-Engineering contributions are evaluated and integrated through a standard Pull Request workflow. Review the specific `CONTRIBUTING.md` in each repository for architecture standards and environment setup:
-
-* [HSYNC Client Contribution Guidelines](https://github.com/albertsdk/hsync-client/blob/main/CONTRIBUTING.md)
-* [HSYNC Server Contribution Guidelines](https://github.com/albertsdk/hsync-server/blob/main/CONTRIBUTING.md)
-* [HSYNC Common Contribution Guidelines](https://github.com/albertsdk/hsync-common/blob/main/CONTRIBUTING.md)
-* [HSYNC Bootnode Contribution Guidelines](https://github.com/albertsdk/hsync-bootnode/blob/main/CONTRIBUTING.md)
-* [HSYNC Main Contribution Guidelines](CONTRIBUTING.md)
+Report vulnerabilities through GitHub's private channel, never in a public issue:
+**[Report a vulnerability](https://github.com/albertsdk/hsync/security/advisories/new)** — supported versions, patch management and hardening guidance are in the [Security Policy](SECURITY.md).
 
 ## Licensing
 
 The HSYNC ecosystem is released under the **[Mozilla Public License 2.0 (MPL 2.0)](LICENSE)**.
-
----
 
 ## Disclaimer
 
