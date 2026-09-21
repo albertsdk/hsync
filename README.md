@@ -6,9 +6,9 @@
 
 **HSYNC** (HTTP Synchronization) provides **real-time**, **enterprise-grade** file synchronization across distributed environments using exclusively the standard **HTTP/HTTPS protocol**.
 
-This architectural design makes HSYNC the optimal solution for environments subject to strict network policies, such as corporate infrastructures, cloud deployments, and zero-trust networks where custom protocols, SSH, or VPNs are restricted. Data is stored natively on the filesystem in its original format—ensuring immediate accessibility and avoiding vendor lock-in through proprietary containers or opaque block stores.
+This architectural design makes HSYNC the optimal solution for environments subject to strict network policies, such as corporate infrastructures, cloud deployments, and zero-trust networks where custom protocols, SSH, or VPNs are restricted. Data is stored natively on the filesystem in its original format, ensuring immediate accessibility and avoiding vendor lock-in through proprietary containers or opaque block stores.
 
-Synchronization is supported both via a centralized hub (Client-Server) and decentralized topologies (P2P — on the local network, or across networks through an optional bootnode).
+Synchronization is supported both via a centralized hub (Client-Server with [HSYNC Server](https://github.com/albertsdk/hsync-server))) and decentralized topologies (P2P — on the local network, or across networks through an optional bootstrap node ([HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)).
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -171,9 +171,9 @@ flowchart TD
 | **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | CLI client: Server Mode and P2P Mode | ✅ Stable |
 | **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
+| **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | ✅ Stable |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
 | HSYNC Android | Android client app | 🚧 In development |
-| **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | 🚧 In development |
 
 *Note: All Stable components are fully tested, documented, and suitable for enterprise deployment.*
 
@@ -209,6 +209,7 @@ Engineering contributions are evaluated and integrated through a standard Pull R
 * [HSYNC Client Contribution Guidelines](https://github.com/albertsdk/hsync-client/blob/main/CONTRIBUTING.md)
 * [HSYNC Server Contribution Guidelines](https://github.com/albertsdk/hsync-server/blob/main/CONTRIBUTING.md)
 * [HSYNC Common Contribution Guidelines](https://github.com/albertsdk/hsync-common/blob/main/CONTRIBUTING.md)
+* [HSYNC Bootnode Contribution Guidelines](https://github.com/albertsdk/hsync-bootnode/blob/main/CONTRIBUTING.md)
 * [HSYNC Main Contribution Guidelines](CONTRIBUTING.md)
 
 ## Licensing
