@@ -4,11 +4,13 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) provides **real-time**, **enterprise-grade** file synchronization across distributed environments, built on the standard **HTTP/HTTPS protocol**: the data plane — synchronization, transfers and events — rides REST and WebSocket calls that pass through existing firewalls, proxies and deep packet inspection systems.
+**HSYNC** (HTTP Synchronization) **is a continuous file synchronization program.** It keeps the same folder identical on two or more computers — in real time, over ordinary HTTP/HTTPS.
 
-This architectural design makes HSYNC the optimal solution for environments subject to strict network policies, such as corporate infrastructures, cloud deployments, and zero-trust networks where custom protocols, SSH, or VPNs are restricted. Data is stored natively on the filesystem in its original format, ensuring immediate accessibility and avoiding vendor lock-in through proprietary containers or opaque block stores.
+Install the client on the machines that matter — laptop, desktop, home server, NAS, cloud VM — point them at the same folder, and every change (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
 
-Synchronization is supported both via a centralized hub (Client-Server with [HSYNC Server](https://github.com/albertsdk/hsync-server)) and decentralized topologies (P2P — on the local network, or across networks through an optional bootstrap node ([HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode))). Both topologies keep the same HTTP-based data plane; only **peer discovery** across networks uses QUIC (`boot/1`), and only when the devices are not on the same LAN.
+It works for simple setups — two laptops sharing one folder at home — and for demanding ones: a central server connecting several offices, isolated groups on the same network, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
+
+Everything HSYNC does — synchronization, transfers, events — travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. Only peer discovery between devices on different networks uses a different mechanism (`boot/1` over QUIC), and only when they are not on the same LAN.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -22,6 +24,85 @@ Synchronization is supported both via a centralized hub (Client-Server with [HSY
 [![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md)
 
 ---
+
+## What you can do with HSYNC
+
+* **Keep folders in sync** — hold the same folder on your laptop, desktop, and server; edit on any device and the others converge in seconds.
+* **Back up a folder** — push it one-way to your own server or NAS, optionally without propagating deletions, so the destination never loses data just because a source file was removed.
+* **Share and exchange files** — a synced folder works as a shared drop box: drop a file in on one machine (or let a colleague do it) and it lands on the others.
+* **Publish a read-only copy** — distribute a mirror that other devices only download from and never write back to.
+* **Sync without a server** — a few devices on the same network discover each other automatically and transfer directly, peer-to-peer, with no infrastructure to run.
+* **Connect devices on different networks** — if a group is spread across networks and you do not want a central server, an optional self-hosted discovery node ([HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)) lets the devices find each other; the file data keeps flowing directly between them.
+* **Automate** — run one-shot syncs from cron, systemd timers, or CI pipelines with a documented exit code for scripting, or keep a long-running daemon that reacts to changes in real time.
+* **Scale it up** — start with one folder, then add buckets, isolated groups with shared keys, ignore patterns, bandwidth limits, and per-device sync directions as your setup grows.
+
+## Two ways to sync
+
+HSYNC runs in one of two modes. Pick the one that fits each sync group.
+
+### Server Mode — with a central server
+
+```mermaid
+flowchart LR
+    subgraph Clients["Endpoints"]
+        CA["🖥️ Client A<br/><small>Workstation</small>"]
+        CB["💻 Client B<br/><small>Remote Device</small>"]
+    end
+
+    Server["🗄️ HSYNC Server<br/><small>REST API & WebSocket Hub</small>"]
+
+    CA <-->|"HTTP/HTTPS"| Server
+    CB <-->|"HTTP/HTTPS"| Server
+
+```
+
+A central [HSYNC Server](https://github.com/albertsdk/hsync-server) stores the shared folders (called **buckets**) and coordinates every device: changes travel to the server as standard REST API calls, and a persistent WebSocket connection announces them to the other devices, which then pull them immediately. Devices do not need to be online at the same time, they can live on different networks, and the server always holds a complete copy of the synchronized data.
+
+**Choose it when:** you sync across networks or over the Internet, you want a central copy on hardware you own, you manage many devices or users, or you need a hub that is always reachable.
+
+### p2p Mode — no server
+
+```mermaid
+flowchart LR
+    CA["🖥️ Client A<br/><small>Workstation</small>"]
+    CB["💻 Client B<br/><small>Remote Device</small>"]
+    BN["📡 Bootnode<br/><small>Optional discovery</small>"]
+
+    CA <-->|"HTTPS<br/>Direct Peer-to-Peer"| CB
+    CA -.->|"boot/1 (QUIC)"| BN
+    CB -.->|"boot/1 (QUIC)"| BN
+
+```
+
+Designed for serverless environments. Devices on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP, peer-to-peer: the file data never passes through another machine, and there is nothing to install or administer beyond the devices themselves. If the group is spread across networks, the devices can use an optional self-hosted [HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode) (`boot/1` over QUIC/UDP 443) to discover each other — a stateless, no-log service that never sees your files. Only discovery leaves the local network: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS.
+
+**Choose it when:** a handful of devices share one network, you want the highest local throughput, or you prefer to run no server at all.
+
+| Situation | Mode |
+| --- | --- |
+| Devices on different networks, or over the Internet | Server Mode |
+| A central copy on hardware you own | Server Mode |
+| Many devices, accounts, and access control | Server Mode |
+| A few devices on the same network | p2p Mode |
+| Direct transfers with no central copy | p2p Mode |
+| No infrastructure at all — or a small self-hosted discovery node | p2p Mode (+ Bootnode across networks) |
+
+## Choose your interface
+
+[HSYNC Client](https://github.com/albertsdk/hsync-client) is the sync engine; several interfaces drive it, and they all speak the same protocols and share the same data model, so different clients can take part in the same sync group.
+
+| Interface | What it gives you | Runs on | Status |
+| --- | --- | --- | --- |
+| **HSYNC Client** (`hsync`) | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb` packages; WD My Cloud OS5 | ✅ Stable |
+| **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | 🚧 In development |
+| **HSYNC Android** | A phone/tablet app: pick a device folder and keep it in sync. | Android (SDK 33+) | 🚧 In development |
+
+## Getting started
+
+1. **Install the client** — prebuilt binaries, `.deb` packages, the WD My Cloud OS5 installer, or source: [HSYNC Client → Installation](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md).
+2. **Run your first sync** — follow the walkthrough for your mode: [Server Mode](https://github.com/albertsdk/hsync-client/blob/main/docs/getting-started-server.md) or [p2p Mode](https://github.com/albertsdk/hsync-client/blob/main/docs/getting-started-p2p.md).
+3. **Running your own hub?** — install the server with Docker or natively: [HSYNC Server → Getting Started](https://github.com/albertsdk/hsync-server/blob/main/docs/getting-started.md).
+4. **Looking for a concrete scenario?** — backup, mirror, multi-device, NAS, photos, scheduling: [HSYNC Client → Examples](https://github.com/albertsdk/hsync-client/blob/main/docs/examples.md).
 
 ## Architectural Applicability
 
@@ -82,44 +163,6 @@ The following table benchmarks HSYNC against industry standards across critical 
 > **²** Utilizes a proprietary block-based internal storage format, rendering files inaccessible from the filesystem without the server software.<br>
 > **³** When utilizing the `crypt` backend, files are stored in an opaque encrypted format.<br>
 > **⁴** Rclone's HTTP backend is restricted to read-only operations. Core synchronization requires non-HTTP protocols.
-
-## Architecture Overview
-
-HSYNC operates seamlessly in two primary network topologies:
-
-### Server Mode (Hub-and-Spoke)
-
-```mermaid
-flowchart LR
-    subgraph Clients["Endpoints"]
-        CA["🖥️ Client A<br/><small>Workstation</small>"]
-        CB["💻 Client B<br/><small>Remote Device</small>"]
-    end
-
-    Server["🗄️ HSYNC Server<br/><small>REST API & WebSocket Hub</small>"]
-
-    CA <-->|"HTTP/HTTPS"| Server
-    CB <-->|"HTTP/HTTPS"| Server
-
-```
-
-A central [HSYNC Server](https://github.com/albertsdk/hsync-server) hosts shared environments (buckets). Connected endpoints push changes via standard REST API calls and maintain a persistent WebSocket connection for event listening. Modifications on any endpoint trigger sub-second broadcast notifications, prompting immediate alignment across all nodes.
-
-### P2P Mode (Decentralized)
-
-```mermaid
-flowchart LR
-    CA["🖥️ Client A<br/><small>Workstation</small>"]
-    CB["💻 Client B<br/><small>Remote Device</small>"]
-    BN["📡 Bootnode<br/><small>Optional discovery</small>"]
-
-    CA <-->|"HTTPS<br/>Direct Peer-to-Peer"| CB
-    CA -.->|"boot/1 (QUIC)"| BN
-    CB -.->|"boot/1 (QUIC)"| BN
-
-```
-
-Designed for serverless environments. Endpoints on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP; groups spread across networks discover each other through an optional self-hosted [HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode) (`boot/1` over QUIC/UDP 443). Only discovery leaves HTTP: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS. Ideal for high-speed, localized data transfer without central infrastructure dependencies.
 
 ## Project Ecosystem
 
