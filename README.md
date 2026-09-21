@@ -23,15 +23,6 @@ Synchronization is supported both via a centralized hub (Client-Server with [HSY
 
 ---
 
-**Quick navigation:**
-
-* **[Architectural Applicability](#architectural-applicability)**
-* **[Technical Capabilities](#technical-capabilities--core-differentiators)**
-* **[Market Comparison](#market-comparison)**
-* **[Architecture Overview](#architecture-overview)**
-* **[Project Ecosystem](#project-ecosystem)**
-* **[Security & Vulnerability Management](#security--vulnerability-management)**
-
 ## Architectural Applicability
 
 HSYNC is engineered to operate seamlessly within:
