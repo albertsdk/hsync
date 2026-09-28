@@ -93,7 +93,7 @@ Designed for serverless environments. Devices on the same local network autonomo
 
 | Interface | What it gives you | Runs on | Status |
 | --- | --- | --- | --- |
-| **HSYNC Client** (`hsync`) | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb` packages; WD My Cloud OS5 | ✅ Stable |
+| **HSYNC Client** | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb` packages; WD My Cloud OS5 | ✅ Stable |
 | **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | 🚧 In development |
 | **HSYNC Android** | A phone/tablet app: pick a device folder and keep it in sync. | Android (SDK 33+) | 🚧 In development |
 
