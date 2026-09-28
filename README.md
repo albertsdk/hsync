@@ -208,6 +208,13 @@ flowchart TD
 Report vulnerabilities through GitHub's private channel, never in a public issue:
 **[Report a vulnerability](https://github.com/albertsdk/hsync/security/advisories/new)** — supported versions, patch management and hardening guidance are in the [Security Policy](SECURITY.md).
 
+## A note from the maintainer
+
+HSYNC is a passion project started by Alberto Basso. It is built in spare time,
+with love. Please remember this when you interact with the project: everyone
+involved is doing our best to build something great together, but it is not a
+paid, full-time job for any of us.
+
 ## Licensing
 
 The HSYNC ecosystem is released under the **[Mozilla Public License 2.0 (MPL 2.0)](LICENSE)**.

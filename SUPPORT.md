@@ -20,6 +20,10 @@ Comprehensive documentation is available for each HSYNC project:
   see [SECURITY.md](SECURITY.md). Do not open public issues for
   security-sensitive matters.
 
+## 💚 Solo project
+
+HSYNC is a passion project maintained in spare time by volunteers. Feature requests, bug reports, and pull requests are reviewed as soon as possible, but response times may vary. Thank you for your patience and support!
+
 ## Community
 
 All HSYNC projects follow the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
