@@ -4,13 +4,13 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) is a secure, fast, **real-time file synchronization system** that keeps a folder identical on two or more computers using ordinary HTTPS protocol.
+**HSYNC** (HTTP Synchronization) is a secure, fast, **self-hosted real-time file synchronization platform** that keeps a folder identical on two or more computers using ordinary HTTPS protocol.
 
-Install the client on the machines that matter: laptop, desktop, home server, NAS, cloud VM; point them at the same folder, and every change (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
+Install the client on the machines that matter: laptop, desktop, home server, NAS, cloud VM; point them to a folder, and every change on it (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
 
-It works for simple setups, two laptops sharing one folder at home and for demanding ones: a central server connecting several offices, isolated groups on the same network, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
+It works for simple setups, two laptops sharing one folder at home, and for demanding ones: with or without a central server, connecting several offices, isolated groups on the same network via direct device-to-device sync, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
 
-Everything HSYNC does - synchronization, transfers, events - travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only instance in which peer discovery between devices on different networks takes place is when a different method is used (over QUIC), and only in the case where the devices are not on the same local area network.
+Everything HSYNC does: synchronization, transfers, events, travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only instance in which peer discovery between devices on different networks takes place is when a different method is used (over QUIC), and only in the case where the devices are not on the same local area network.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
