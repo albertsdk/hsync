@@ -4,7 +4,7 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) is a system designed for **continuous file synchronization** and it ensures that the same folder remains identical on two or more computers in real time via ordinary HTTPS protocol.
+**HSYNC** (HTTP Synchronization) is a secure, fast, **real-time file synchronization system** that keeps a folder identical on two or more computers using ordinary HTTPS protocol.
 
 Install the client on the machines that matter: laptop, desktop, home server, NAS, cloud VM; point them at the same folder, and every change (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
 
