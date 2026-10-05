@@ -4,13 +4,13 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) **is a continuous file synchronization program.** It keeps the same folder identical on two or more computers — in real time, over ordinary HTTP/HTTPS.
+**HSYNC** (HTTP Synchronization) **is a continuous file synchronization system.** It keeps the same folder identical on two or more computers in real time, over ordinary HTTP/HTTPS.
 
-Install the client on the machines that matter — laptop, desktop, home server, NAS, cloud VM — point them at the same folder, and every change (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
+Install the client on the machines that matter: laptop, desktop, home server, NAS, cloud VM; point them at the same folder, and every change (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
 
-It works for simple setups — two laptops sharing one folder at home — and for demanding ones: a central server connecting several offices, isolated groups on the same network, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
+It works for simple setups, two laptops sharing one folder at home and for demanding ones: a central server connecting several offices, isolated groups on the same network, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
 
-Everything HSYNC does — synchronization, transfers, events — travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. Only peer discovery between devices on different networks uses a different mechanism (`boot/1` over QUIC), and only when they are not on the same LAN.
+Everything HSYNC does - synchronization, transfers, events - travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. Only peer discovery between devices on different networks uses a different mechanism (`boot/1` over QUIC), and only when they are not on the same LAN.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -96,6 +96,14 @@ Designed for serverless environments. Devices on the same local network autonomo
 | **HSYNC Client** | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb` packages; WD My Cloud OS5 | ✅ Stable |
 | **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | 🚧 In development |
 | **HSYNC Android** | A phone/tablet app: pick a device folder and keep it in sync. | Android (SDK 33+) | 🚧 In development |
+
+## Privacy, security & openness
+
+* 🏠 **Private** — no vendor account and no third-party service in the data path: Server Mode stores your data only on the hub you run yourself, and p2p Mode transfers directly between your devices.
+* 🪪 **Authenticated** — every installation has a stable **device ID** with its own ECDSA P-256 keypair; peers are trusted on first use and pinned by certificate fingerprint, so a changed identity is refused and only trusted devices are accepted.
+* 🧾 **Encrypted** — TLS on every transport (REST/WebSocket in Server Mode, HTTPS/WSS in p2p Mode), with no plaintext payload path.
+* 📖 **Open** — the wire protocol and file model are an open, versioned specification with shared schemas and fixtures (see the [protocol](https://github.com/albertsdk/hsync-common/blob/main/docs/protocol.md) and [p2p protocol](https://github.com/albertsdk/hsync-common/blob/main/docs/p2p-protocol.md) references), and development happens in the open.
+* 📡 **No telemetry** — HSYNC sends no usage data or analytics anywhere.
 
 ## Getting started
 
@@ -202,6 +210,10 @@ flowchart TD
 | HSYNC Android | Android client app | 🚧 In development |
 
 *Note: All Stable components ship a full test suite and documentation, and are suitable for enterprise deployment.*
+
+## Contributing
+
+HSYNC is developed in the open. Bug reports, feature requests and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Security & Vulnerability Management
 
