@@ -4,13 +4,13 @@
 
 # HSYNC
 
-**HSYNC** (HTTP Synchronization) **is a continuous file synchronization system.** It keeps the same folder identical on two or more computers in real time, over ordinary HTTP/HTTPS.
+**HSYNC** (HTTP Synchronization) is a system designed for **continuous file synchronization** and it ensures that the same folder remains identical on two or more computers in real time via ordinary HTTPS protocol.
 
 Install the client on the machines that matter: laptop, desktop, home server, NAS, cloud VM; point them at the same folder, and every change (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
 
 It works for simple setups, two laptops sharing one folder at home and for demanding ones: a central server connecting several offices, isolated groups on the same network, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
 
-Everything HSYNC does - synchronization, transfers, events - travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. Only peer discovery between devices on different networks uses a different mechanism (`boot/1` over QUIC), and only when they are not on the same LAN.
+Everything HSYNC does - synchronization, transfers, events - travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only instance in which peer discovery between devices on different networks takes place is when a different method is used (over QUIC), and only in the case where the devices are not on the same local area network.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
