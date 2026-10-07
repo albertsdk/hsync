@@ -93,7 +93,7 @@ Designed for serverless environments. Devices on the same local network autonomo
 
 | Interface | What it gives you | Runs on | Status |
 | --- | --- | --- | --- |
-| **HSYNC Client** | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb` packages; WD My Cloud OS5 | ✅ Stable |
+| **HSYNC Client** | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb`  `.rpm` packages; WD My Cloud OS5 | ✅ Stable |
 | **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | 🚧 In development |
 | **HSYNC Android** | A phone/tablet app: pick a device folder and keep it in sync. | Android (SDK 33+) | 🚧 In development |
 
@@ -203,8 +203,8 @@ flowchart TD
 | Component | Function | Lifecycle Status |
 | --- | --- | --- |
 | **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | CLI client: Server Mode and P2P Mode | ✅ Stable |
-| **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
+| **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Optional central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
 | **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | ✅ Stable |
 | HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
 | HSYNC Android | Android client app | 🚧 In development |
@@ -222,11 +222,11 @@ Report vulnerabilities through GitHub's private channel, never in a public issue
 
 ## 🙋‍♂️ A note from the maintainer
 
-This project was born out of the need for a system capable of replicating the contents of a folder from a PC or Android device to a NAS, primarily for backup purposes. There were already several solutions available for this purpose, but I could not find one that met all the requirements I ultimately needed. This led to the somewhat questionable idea of developing one from scratch and, in the process, gaining a deeper understanding of various programming languages, algorithms, frameworks, and so on.
+This project was born out of the need for a system capable of replicating the contents of a folder from a PC or Android device to a NAS, primarily for backup purposes. Several solutions were already available, but I couldn't find one that met all my requirements. This led to the somewhat questionable decision to develop one from scratch, while also providing an opportunity to gain a deeper understanding of programming languages, algorithms, frameworks, and related technologies.
 
-Originally conceived as a hobby project, although it has been under constant development ever since, I believe I can now say that it has evolved to the point where its capabilities are comparable to those of commercial products, while also offering some distinctive features. As such, it could potentially be deployed in a variety of production environments as well.
+Originally conceived as a hobby project, HSYNC has been under continuous development ever since. I believe it has now evolved to the point where its capabilities are comparable to those of commercial solutions, while also offering some distinctive features. As a result, it may also be suitable for deployment in certain production environments.
 
-HSYNC is a passion project developed in my spare time, currently primarily led by me. Please remember this when you interact with the project: everyone involved is doing our best to build something great together, but it is not a paid, full-time job for any of us.
+HSYNC is a passion project that I primarily develop and maintain in my spare time. Please keep this in mind when interacting with the project: we're all doing our best to build something great together, but this is not a paid, full-time job for any of us.
 
 ## Licensing
 
