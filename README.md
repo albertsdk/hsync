@@ -8,9 +8,9 @@
 
 Install the client on the machines that matter: laptop, desktop, home server, NAS, cloud VM; point them to a folder, and every change on it (a new document, an edited photo, a renamed directory, a deletion) appears on the other machines within seconds. There is no account to create with a third-party provider and no external service in the data path: HSYNC runs on hardware you own, and your files stay in their original format, directly browsable on disk.
 
-It works for simple setups, two laptops sharing one folder at home, and for demanding ones: with or without a central server, connecting several offices, isolated groups on the same network via direct device-to-device sync, or unattended syncs driven by scripts and schedulers. Same software, same protocol: from a single command to a fleet.
+It works for simple setups (two laptops sharing one folder at home) and for demanding ones: with or without a central server, connecting several offices, isolated groups on the same network via direct device-to-device sync, or unattended syncs driven by scripts and schedulers. Same software, same protocol — from a single command to a fleet.
 
-Everything HSYNC does: synchronization, transfers, events, travels over standard HTTP/HTTPS (REST and WebSocket), so it passes through the firewalls, proxies, and deep packet inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only instance in which peer discovery between devices on different networks takes place is when a different method is used (over QUIC), and only in the case where the devices are not on the same local area network.
+Everything HSYNC does (synchronization, transfers, and events) travels over standard HTTPS/WSS (REST and WebSocket), so it passes through the firewalls, proxies, and deep-packet-inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only exception is peer discovery between devices on different networks: it uses a different transport (QUIC over UDP 443), and only when the devices are not on the same local network.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -21,7 +21,7 @@ Everything HSYNC does: synchronization, transfers, events, travels over standard
 [![Android SDK 33+](https://img.shields.io/badge/Android-33+-3DDC84.svg)](https://developer.android.com/)
 [![Qt 6](https://img.shields.io/badge/Qt-6-41CD52.svg)](https://www.qt.io/)
 [![Rust 1.98+](https://img.shields.io/badge/Rust-1.98+-DEA584.svg)](https://www.rust-lang.org/)
-[![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_WD_My_Cloud-lightgrey.svg)](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md)
+[![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_Windows_|_WD_My_Cloud_OS5-lightgrey.svg)](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md)
 
 ---
 
@@ -89,11 +89,11 @@ Designed for serverless environments. Devices on the same local network autonomo
 
 ## Choose your interface
 
-[HSYNC Client](https://github.com/albertsdk/hsync-client) is the sync engine; several interfaces drive it, and they all speak the same protocols and share the same data model, so different clients can take part in the same sync group.
+[HSYNC Client](https://github.com/albertsdk/hsync-client) is the synchronization agent; several interfaces build on it, and they all speak the same protocols and share the same data model, so different clients can take part in the same sync group. (It acts as the engine when the desktop GUI drives it as a subprocess.)
 
 | Interface | What it gives you | Runs on | Status |
 | --- | --- | --- | --- |
-| **HSYNC Client** | The engine from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb`  `.rpm` packages; WD My Cloud OS5 | ✅ Stable |
+| **HSYNC Client** | The synchronization agent from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb`  `.rpm` packages; WD My Cloud OS5 | ✅ Stable |
 | **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | 🚧 In development |
 | **HSYNC Android** | A phone/tablet app: pick a device folder and keep it in sync. | Android (SDK 33+) | 🚧 In development |
 
@@ -112,45 +112,45 @@ Designed for serverless environments. Devices on the same local network autonomo
 3. **Running your own hub?** — install the server with Docker or natively: [HSYNC Server → Getting Started](https://github.com/albertsdk/hsync-server/blob/main/docs/getting-started.md).
 4. **Looking for a concrete scenario?** — backup, mirror, multi-device, NAS, photos, scheduling: [HSYNC Client → Examples](https://github.com/albertsdk/hsync-client/blob/main/docs/examples.md).
 
-## Architectural Applicability
+## Where HSYNC fits
 
-HSYNC is engineered to operate seamlessly within:
+HSYNC works well in these environments:
 
-* **Corporate Networks:** Operates over standard HTTP ports — the server listens on **9753** by default and is exposed on 443 by a reverse proxy (or directly with `--port 443`) — so it passes through existing firewalls, proxies, and deep packet inspection systems.
-* **Cloud Infrastructures:** Fully compatible with standard IT infrastructure, including load balancers, Web Application Firewalls (WAFs), and reverse proxies.
-* **Restricted Environments:** Functions autonomously in secure environments where standard administrative protocols (like SSH) or VPN access are prohibited.
-* **Real-Time Workflows:** Replaces legacy polling mechanisms with event-driven, WebSocket-based push notifications for immediate data consistency.
+* **Corporate networks:** it speaks standard HTTP — the server listens on **9753** by default and is exposed on 443 by a reverse proxy (or directly with `--port 443`) — so it passes through existing firewalls, proxies, and deep packet inspection.
+* **Cloud infrastructure:** compatible with the usual building blocks — load balancers, web application firewalls (WAFs), and reverse proxies.
+* **Restricted environments:** runs where SSH or VPN access is not allowed.
+* **Real-time workflows:** pushes changes as they happen over WebSockets, instead of polling for them.
 
-## Technical Capabilities & Core Differentiators
+## What HSYNC does well
 
-### ⚙️ Core Performance Differentiators
+### ⚙️ Speed
 
-* **Zero-Delay Sync (Fast after save):** Data transfer triggers immediately upon file closure, eliminating traditional quiet-window latencies and ensuring continuous pipeline synchronization.
-* **Block-Level Delta Transfer:** For large files, the system transmits exclusively the modified data blocks (rsync-style). This drastically reduces bandwidth consumption and transfer times.
-* **Direct P2P Mode:** Enables direct device-to-device synchronization without centralized server dependency, minimizing infrastructure load and maximizing local network throughput.
+* **Sync when you save:** a transfer starts as soon as a file is closed — no quiet-window delay.
+* **Block-level delta transfer:** for large files, only the changed blocks are sent (rsync-style), which cuts bandwidth and time.
+* **Direct P2P mode:** devices sync straight to each other, with no server in between.
 
-### 🛰️ Network & Architecture
+### 🛰️ Networking
 
-* **Universal HTTP/HTTPS Compatibility:** Operates over standard HTTP/HTTPS ports, so it traverses common enterprise network setups without custom routing or additional port forwarding.
-* **Deterministic Deletion Handling (Tombstones):** Employs strict tombstone tracking to prevent the accidental resurrection of deleted files across distributed nodes.
-* **Native Symlink Support:** Accurately preserves symbolic links across platforms, a critical requirement for development environments and system administration.
-* **Real-Time Architecture:** Event-driven architecture powered by WebSockets, eliminating the high overhead and inefficiency of traditional HTTP polling.
-* **Private P2P Networks:** P2P clusters can be isolated from one another with a group filter and authenticated with a shared group key, so independent teams can share one physical network without ever mixing data.
-* **Self-Hosted, No Vendor Lock-In:** every topology runs on infrastructure you own — the hub is your own server and buckets are plain directories on your filesystem, with no third-party service in the data path.
+* **Standard HTTP/HTTPS:** no custom ports or protocols, so it fits common network setups without extra routing.
+* **Deletions stay deleted (tombstones):** a file deleted on one device is not silently brought back by another.
+* **Symlinks preserved:** symbolic links are kept as-is across platforms.
+* **Event-driven (WebSocket):** updates are pushed instantly instead of polled.
+* **Private P2P groups:** a shared group key and a group filter keep independent clusters from mixing data on one network.
+* **Self-hosted, no lock-in:** it runs on your infrastructure — the hub is your own server and buckets are plain directories on your filesystem, with no third party in the data path.
 
-### 🛡️ Resilience & Data Integrity
+### 🛡️ Reliability & data integrity
 
-* **Fault-Tolerant Transfers (Resumable uploads):** Automatically resumes interrupted transfers from the exact point of failure, ensuring reliable delivery of massive payloads over unstable connections.
-* **Zstandard (Zstd) Compression:** Utilizes modern compression algorithms to optimize throughput, particularly effective on low-bandwidth links.
-* **SHA-256 Integrity Verification:** Hashes every file end-to-end, so transmission corruption is detected before a file is committed.
+* **Uploads resume after a drop:** an interrupted transfer continues from where it stopped.
+* **Zstandard (Zstd) compression:** modern compression that helps most on slow links.
+* **SHA-256 integrity checks:** every file is hashed end-to-end, so corruption is caught before a file is committed.
 
-### 🔐 Security, Governance & Deployment
+### 🔐 Security & operations
 
-* **Isolated Data Architecture (Bucket-based):** Organizes logical groups of files into isolated sync buckets, facilitating multi-tenant architectures and strict access control.
-* **Standardized Authentication:** Secures endpoints via API Key (Bearer token) authentication, easily integrable with enterprise secret management systems.
-* **Built-in Observability (Prometheus):** Exposes native metrics for direct integration into corporate monitoring and alerting stacks.
-* **Containerized Deployment (Docker):** Ensures rapid, reproducible deployments via single `compose.yaml` files, ideal for cloud-native and on-premise scaling.
-* **Infrastructure Protection (Rate Limiting):** Incorporates defense mechanisms against traffic spikes and abuse, ensuring high availability and service uptime.
+* **Isolated buckets:** files are grouped into separate buckets with their own access control (multi-tenant friendly).
+* **Standardized API-key (Bearer) authentication:** simple tokens that plug into your secret management.
+* **Prometheus metrics:** built-in metrics for your monitoring and alerting.
+* **Docker-ready:** bring it up with a single `compose.yaml`.
+* **Rate limiting:** protects against traffic spikes and abuse.
 
 ## Market Comparison
 
