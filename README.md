@@ -94,7 +94,7 @@ Designed for serverless environments. Devices on the same local network autonomo
 | Interface | What it gives you | Runs on | Status |
 | --- | --- | --- | --- |
 | **HSYNC Client** | The synchronization agent from the command line: every option, fully scriptable, headless. | Linux, macOS, Windows; `.deb`  `.rpm` packages; WD My Cloud OS5 | ✅ Stable |
-| **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | 🚧 In development |
+| **HSYNC Desktop** | A graphical app: start and stop sync, watch transfers, adjust settings, desktop notifications. | Windows, macOS, Linux | ✅ Stable |
 | **HSYNC Android** | A phone/tablet app: pick a device folder and keep it in sync. | Android (SDK 33+) | 🚧 In development |
 
 ## Privacy, security & openness
@@ -202,11 +202,11 @@ flowchart TD
 
 | Component | Function | Lifecycle Status |
 | --- | --- | --- |
-| **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | CLI client: Server Mode and P2P Mode | ✅ Stable |
-| **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
+| **[HSYNC Desktop](https://github.com/albertsdk/hsync-desktop)** | Desktop GUI front-end | ✅ Stable |
+| **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | Command-line sync client | ✅ Stable |
 | **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Optional central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
 | **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | ✅ Stable |
-| HSYNC Desktop | Desktop GUI front-end | 🚧 In development |
+| **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
 | HSYNC Android | Android client app | 🚧 In development |
 
 *Note: All Stable components ship a full test suite and documentation, and are suitable for enterprise deployment.*
