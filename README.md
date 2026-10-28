@@ -20,7 +20,7 @@ Everything HSYNC does (synchronization, transfers, and events) travels over stan
 [![Kotlin 2.4](https://img.shields.io/badge/Kotlin-2.4-7F52FF.svg)](https://kotlinlang.org/)
 [![Android SDK 33+](https://img.shields.io/badge/Android-33+-3DDC84.svg)](https://developer.android.com/)
 [![Qt 6](https://img.shields.io/badge/Qt-6-41CD52.svg)](https://www.qt.io/)
-[![Rust 1.98+](https://img.shields.io/badge/Rust-1.98+-DEA584.svg)](https://www.rust-lang.org/)
+[![C11 (planned)](https://img.shields.io/badge/C-11_(planned)-A8B9CC.svg)](https://github.com/albertsdk/hsync-bootnode/tree/main/c)
 [![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_Windows_|_WD_My_Cloud_OS5-lightgrey.svg)](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md)
 
 ---
