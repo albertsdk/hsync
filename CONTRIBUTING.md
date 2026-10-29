@@ -28,7 +28,9 @@ Each repository contains its own `CONTRIBUTING.md` with:
 
 - **Changes to shared models** (`hsync-common`) should be tested against
   the projects that depend on them (`hsync-server`, `hsync-client`,
-  `hsync-desktop`, `hsync-android`) before opening a PR.
+  `hsync-desktop`, `hsync-android`) before opening a PR. The packaging
+  repository inherits that surface too: `hsync-wd-os5` bundles the client and
+  fails the build when the client and `hsync-common` versions disagree.
 - **API changes** must keep the OpenAPI reference (`docs/api.md`) and
   environment variable tables in sync.
 - **Cross-project decisions** are documented as Architecture Decision
