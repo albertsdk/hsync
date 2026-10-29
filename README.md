@@ -89,7 +89,7 @@ Designed for serverless environments. Devices on the same local network autonomo
 
 ## Choose your interface
 
-[HSYNC Client](https://github.com/albertsdk/hsync-client) is the synchronization agent; several interfaces build on it, and they all speak the same protocols and share the same data model, so different clients can take part in the same sync group. (It acts as the engine when the desktop GUI drives it as a subprocess.)
+[HSYNC Client](https://github.com/albertsdk/hsync-client) is the **reference client agent**: the `hsync` command plus the sync engine behind it. Several interfaces build on it — HSYNC Desktop and HSYNC Android are front-ends of the same role — and they all speak the same protocols and share the same data model, so different clients can take part in the same sync group. (It acts as the engine when the desktop GUI drives it as a subprocess.)
 
 | Interface | What it gives you | Runs on | Status |
 | --- | --- | --- | --- |
@@ -203,7 +203,7 @@ flowchart TD
 | Component | Function | Lifecycle Status |
 | --- | --- | --- |
 | **[HSYNC Desktop](https://github.com/albertsdk/hsync-desktop)** | Desktop GUI front-end | ✅ Stable |
-| **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | Command-line sync client | ✅ Stable |
+| **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | Reference client agent: the `hsync` CLI and its sync engine | ✅ Stable |
 | **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Optional central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
 | **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | ✅ Stable |
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
