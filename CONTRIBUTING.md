@@ -10,7 +10,7 @@ each with its own repository, setup instructions, and contribution workflow.
 | **HSYNC Common** | [hsync-common](https://github.com/albertsdk/hsync-common) | Shared library: models, protocol, hashing, compression |
 | **HSYNC Server** | [hsync-server](https://github.com/albertsdk/hsync-server) | REST API + WebSocket hub |
 | **HSYNC Client** | [hsync-client](https://github.com/albertsdk/hsync-client) | CLI client (Server Mode + P2P) |
-| **HSYNC Bootnode** | [hsync-bootnode](https://github.com/albertsdk/hsync-bootnode) | Optional Internet discovery node for P2P topologies (`boot/1`) |
+| **HSYNC Rendezvous** | [hsync-rendezvous](https://github.com/albertsdk/hsync-rendezvous) | Optional Internet rendezvous node for P2P topologies (`rdv/1`) |
 | **HSYNC Desktop** | [hsync-desktop](https://github.com/albertsdk/hsync-desktop) | Desktop GUI (Qt 6) |
 | **HSYNC Android** | [hsync-android](https://github.com/albertsdk/hsync-android) | Android client app |
 | **HSYNC WD OS5** | [hsync-wd-os5](https://github.com/albertsdk/hsync-wd-os5) | Packaging repo: WD My Cloud OS5 `.bin` and NAS web UI (versioned with the client) |

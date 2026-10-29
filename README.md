@@ -10,7 +10,7 @@ Install the client on the machines that matter: laptop, desktop, home server, NA
 
 It works for simple setups (two laptops sharing one folder at home) and for demanding ones: with or without a central server, connecting several offices, isolated groups on the same network via direct device-to-device sync, or unattended syncs driven by scripts and schedulers. Same software, same protocol — from a single command to a fleet.
 
-Everything HSYNC does (synchronization, transfers, and events) travels over standard HTTPS/WSS (REST and WebSocket), so it passes through the firewalls, proxies, and deep-packet-inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only exception is peer discovery between devices on different networks: it uses a different transport (QUIC over UDP 443), and only when the devices are not on the same local network.
+Everything HSYNC does (synchronization, transfers, and events) travels over standard HTTPS/WSS (REST and WebSocket), so it passes through the firewalls, proxies, and deep-packet-inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only exception is peer rendezvous between devices on different networks: it uses a different transport (QUIC over UDP 443), and only when the devices are not on the same local network.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -20,7 +20,7 @@ Everything HSYNC does (synchronization, transfers, and events) travels over stan
 [![Kotlin 2.4](https://img.shields.io/badge/Kotlin-2.4-7F52FF.svg)](https://kotlinlang.org/)
 [![Android SDK 33+](https://img.shields.io/badge/Android-33+-3DDC84.svg)](https://developer.android.com/)
 [![Qt 6](https://img.shields.io/badge/Qt-6-41CD52.svg)](https://www.qt.io/)
-[![C11 (planned)](https://img.shields.io/badge/C-11_(planned)-A8B9CC.svg)](https://github.com/albertsdk/hsync-bootnode/tree/main/c)
+[![C11 (planned)](https://img.shields.io/badge/C-11_(planned)-A8B9CC.svg)](https://github.com/albertsdk/hsync-rendezvous/tree/main/c)
 [![Platform](https://img.shields.io/badge/Platform-Linux_|_macOS_|_Windows_|_WD_My_Cloud_OS5-lightgrey.svg)](https://github.com/albertsdk/hsync-client/blob/main/docs/installation.md)
 
 ---
@@ -32,7 +32,7 @@ Everything HSYNC does (synchronization, transfers, and events) travels over stan
 * **Share and exchange files** — a synced folder works as a shared drop box: drop a file in on one machine (or let a colleague do it) and it lands on the others.
 * **Publish a read-only copy** — distribute a mirror that other devices only download from and never write back to.
 * **Sync without a server** — a few devices on the same network discover each other automatically and transfer directly, peer-to-peer, with no infrastructure to run.
-* **Connect devices on different networks** — if a group is spread across networks and you do not want a central server, an optional self-hosted discovery node ([HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)) lets the devices find each other; the file data keeps flowing directly between them.
+* **Connect devices on different networks** — if a group is spread across networks and you do not want a central server, an optional self-hosted rendezvous node ([HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous)) lets the devices find each other; the file data keeps flowing directly between them.
 * **Automate** — run one-shot syncs from cron, systemd timers, or CI pipelines with a documented exit code for scripting, or keep a long-running daemon that reacts to changes in real time.
 * **Scale it up** — start with one folder, then add buckets, isolated groups with shared keys, ignore patterns, bandwidth limits, and per-device sync directions as your setup grows.
 
@@ -66,15 +66,15 @@ A central [HSYNC Server](https://github.com/albertsdk/hsync-server) stores the s
 flowchart LR
     CA["🖥️ Client A<br/><small>Workstation</small>"]
     CB["💻 Client B<br/><small>Remote Device</small>"]
-    BN["📡 Bootnode<br/><small>Optional discovery</small>"]
+    BN["📡 Rendezvous<br/><small>Optional rendezvous</small>"]
 
     CA <-->|"HTTPS<br/>Direct Peer-to-Peer"| CB
-    CA -.->|"boot/1 (QUIC)"| BN
-    CB -.->|"boot/1 (QUIC)"| BN
+    CA -.->|"rdv/1 (QUIC)"| BN
+    CB -.->|"rdv/1 (QUIC)"| BN
 
 ```
 
-Designed for serverless environments. Devices on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP, peer-to-peer: the file data never passes through another machine, and there is nothing to install or administer beyond the devices themselves. If the group is spread across networks, the devices can use an optional self-hosted [HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode) (`boot/1` over QUIC/UDP 443) to discover each other — a stateless, no-log service that never sees your files. Only discovery leaves the local network: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS.
+Designed for serverless environments. Devices on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP, peer-to-peer: the file data never passes through another machine, and there is nothing to install or administer beyond the devices themselves. If the group is spread across networks, the devices can use an optional self-hosted [HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous) (`rdv/1` over QUIC/UDP 443) to discover each other — a stateless, no-log service that never sees your files. Only rendezvous leaves the local network: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS.
 
 **Choose it when:** a handful of devices share one network, you want the highest local throughput, or you prefer to run no server at all.
 
@@ -85,7 +85,7 @@ Designed for serverless environments. Devices on the same local network autonomo
 | Many devices, accounts, and access control | Server Mode |
 | A few devices on the same network | p2p Mode |
 | Direct transfers with no central copy | p2p Mode |
-| No infrastructure at all — or a small self-hosted discovery node | p2p Mode (+ Bootnode across networks) |
+| No infrastructure at all — or a small self-hosted rendezvous node | p2p Mode (+ Rendezvous across networks) |
 
 ## Choose your interface
 
@@ -185,14 +185,14 @@ flowchart TD
     Client["💻 HSYNC Client<br/><small>CLI: Node Controller</small>"]
     Desktop["🖥️ HSYNC Desktop<br/><small>GUI Interface</small>"]
     Android["📱 HSYNC Android<br/><small>Mobile Application</small>"]
-    Bootnode["📡 HSYNC Bootnode<br/><small>P2P Internet Discovery</small>"]
+    Rendezvous["📡 HSYNC Rendezvous<br/><small>P2P Internet Rendezvous</small>"]
 
     Main -.-> Common
     Main -.-> Server
     Main -.-> Client
     Main -.-> Desktop
     Main -.-> Android
-    Main -.-> Bootnode
+    Main -.-> Rendezvous
 
     Server --> Common
     Client --> Common
@@ -205,7 +205,7 @@ flowchart TD
 | **[HSYNC Desktop](https://github.com/albertsdk/hsync-desktop)** | Desktop GUI front-end | ✅ Stable |
 | **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | Reference client agent: the `hsync` CLI and its sync engine | ✅ Stable |
 | **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Optional central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
-| **[HSYNC Bootnode](https://github.com/albertsdk/hsync-bootnode)** | Optional Internet discovery node for P2P topologies: `boot/1` over QUIC, no-log, RAM-only | ✅ Stable |
+| **[HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous)** | Optional Internet rendezvous node for P2P topologies: `rdv/1` over QUIC, no-log, RAM-only | ✅ Stable |
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
 | HSYNC Android | Android client app | 🚧 In development |
 
