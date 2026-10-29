@@ -13,6 +13,7 @@ each with its own repository, setup instructions, and contribution workflow.
 | **HSYNC Bootnode** | [hsync-bootnode](https://github.com/albertsdk/hsync-bootnode) | Optional Internet discovery node for P2P topologies (`boot/1`) |
 | **HSYNC Desktop** | [hsync-desktop](https://github.com/albertsdk/hsync-desktop) | Desktop GUI (Qt 6) |
 | **HSYNC Android** | [hsync-android](https://github.com/albertsdk/hsync-android) | Android client app |
+| **HSYNC WD OS5** | [hsync-wd-os5](https://github.com/albertsdk/hsync-wd-os5) | Packaging repo: WD My Cloud OS5 `.bin` and NAS web UI (versioned with the client) |
 
 Each repository contains its own `CONTRIBUTING.md` with:
 

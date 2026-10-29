@@ -211,6 +211,8 @@ flowchart TD
 
 *Note: All Stable components ship a full test suite and documentation, and are suitable for enterprise deployment.*
 
+*Distribution packages built from these components live in their own repositories — e.g. [hsync-wd-os5](https://github.com/albertsdk/hsync-wd-os5) for WD My Cloud OS5 (`.bin` installer plus the NAS web UI, versioned with HSYNC Client).*
+
 ## Contributing
 
 HSYNC is developed in the open. Bug reports, feature requests and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
