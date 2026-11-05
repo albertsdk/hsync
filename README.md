@@ -10,7 +10,7 @@ Install the client on the machines that matter: laptop, desktop, home server, NA
 
 It works for simple setups (two laptops sharing one folder at home) and for demanding ones: with or without a central server, connecting several offices, isolated groups on the same network via direct device-to-device sync, or unattended syncs driven by scripts and schedulers. Same software, same protocol — from a single command to a fleet.
 
-Everything HSYNC does (synchronization, transfers, and events) travels over standard HTTPS/WSS (REST and WebSocket), so it passes through the firewalls, proxies, and deep-packet-inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only exception is peer rendezvous between devices on different networks: it uses a different transport (QUIC over UDP 443), and only when the devices are not on the same local network.
+Everything HSYNC does (synchronization, transfers, and events) travels over standard HTTPS/WSS (REST and WebSocket), so it passes through the firewalls, proxies, and deep-packet-inspection systems of networks where custom protocols, SSH, or VPNs are not an option. The only exception is peer rendezvous between devices on different networks: it uses a different transport (QUIC/UDP or TLS/TCP, same port 443), and only when the devices are not on the same local network.
 
 > 👉 **Operational Advisory:** As with any automated filesystem mutation utility, administrators are strongly advised to maintain validated, independent backups prior to initial deployment in production environments.
 
@@ -69,12 +69,12 @@ flowchart LR
     BN["📡 Rendezvous<br/><small>Optional rendezvous</small>"]
 
     CA <-->|"HTTPS<br/>Direct Peer-to-Peer"| CB
-    CA -.->|"rdv/1 (QUIC)"| BN
-    CB -.->|"rdv/1 (QUIC)"| BN
+    CA -.->|"QUIC/UDP or TLS/TCP"| BN
+    CB -.->|"QUIC/UDP or TLS/TCP"| BN
 
 ```
 
-Designed for serverless environments. Devices on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP, peer-to-peer: the file data never passes through another machine, and there is nothing to install or administer beyond the devices themselves. If the group is spread across networks, the devices can use an optional self-hosted [HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous) (`rdv/1` over QUIC/UDP 443) to discover each other — a stateless, no-log service that never sees your files. Only rendezvous leaves the local network: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS.
+Designed for serverless environments. Devices on the same local network autonomously discover one another over mDNS and perform direct synchronization over HTTP, peer-to-peer: the file data never passes through another machine, and there is nothing to install or administer beyond the devices themselves. If the group is spread across networks, the devices can use an optional self-hosted [HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous) (`rdv/1` over QUIC/UDP or TLS/TCP same 443 port) to discover each other — a stateless, no-log service that never sees your files. Only rendezvous leaves the local network: the synchronization data plane stays direct peer-to-peer over HTTPS/WSS.
 
 **Choose it when:** a handful of devices share one network, you want the highest local throughput, or you prefer to run no server at all.
 
@@ -205,7 +205,7 @@ flowchart TD
 | **[HSYNC Desktop](https://github.com/albertsdk/hsync-desktop)** | Desktop GUI front-end | ✅ Stable |
 | **[HSYNC Client](https://github.com/albertsdk/hsync-client)** | Reference client agent: the `hsync` CLI and its sync engine | ✅ Stable |
 | **[HSYNC Server](https://github.com/albertsdk/hsync-server)** | Optional central sync hub: REST API, WebSocket relay, file storage | ✅ Stable |
-| **[HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous)** | Optional Internet rendezvous node for P2P topologies: `rdv/1` over QUIC, no-log, RAM-only | ✅ Stable |
+| **[HSYNC Rendezvous](https://github.com/albertsdk/hsync-rendezvous)** | Optional Internet rendezvous node for P2P topologies over QUIC/UDP or TLS/TCP, no-log, RAM-only | ✅ Stable |
 | **[HSYNC Common](https://github.com/albertsdk/hsync-common)** | Shared library: data models, protocol, delta transfer, hashing | ✅ Stable |
 | HSYNC Android | Android client app | 🚧 In development |
 
