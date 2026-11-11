@@ -35,11 +35,10 @@ Each repository contains its own `CONTRIBUTING.md` with:
   environment variable tables in sync.
 - **Cross-project decisions** are documented as Architecture Decision
   Records in the [hsync-common ADR directory](https://github.com/albertsdk/hsync-common/blob/main/docs/internal/adr/README.md).
-- **Documentation** — HSYNC maintains two documentation sets that must stay
-  in sync with the code: `llm-wiki/` (internal agent knowledge base) and
-  `docs/` (end-user technical documentation). Any change that affects
-  architecture, contracts, configuration, or behavior must update the
-  relevant files in both sets within the same change.
+- **Documentation** — the end-user technical documentation (`docs/`) must stay
+  in sync with the code. Any change that affects architecture, contracts,
+  configuration, or behavior must update the relevant `docs/` files within the
+  same change.
 
 ## Reporting issues
 
