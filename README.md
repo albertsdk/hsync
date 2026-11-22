@@ -215,7 +215,7 @@ flowchart TD
 
 ## Contributing
 
-HSYNC is developed in the open. Bug reports, feature requests and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+HSYNC is developed in the open. Bug reports, feature requests and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md). The people behind it are listed in [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ## Security & Vulnerability Management
 

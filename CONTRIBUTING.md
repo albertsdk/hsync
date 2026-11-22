@@ -51,3 +51,8 @@ Each repository contains its own `CONTRIBUTING.md` with:
 
 All HSYNC projects follow the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
+
+## Contributors
+
+The people who have contributed to HSYNC are listed in
+[CONTRIBUTORS.md](CONTRIBUTORS.md).
